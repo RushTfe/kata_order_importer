@@ -6,6 +6,8 @@ Este proyecto constará de una serie de APIS que se irán documentando aquí mis
 
 Devolverá un listado con todas las ordenes que se encuentran en BD. Al ser 1.000.000 de ordenes aproximadamente, se hará una lista paginada, y cada página se pedirá al server para no cargarlas todas en el navegador del cliente.
 
+[URL de SwaggerUI](http://localhost:8080/swagger-ui/index.html#/)
+
 
 ## GET api/koi/orders/summary
 
