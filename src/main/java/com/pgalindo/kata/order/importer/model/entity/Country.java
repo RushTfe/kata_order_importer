@@ -16,6 +16,15 @@ public class Country {
     @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Region region;
 
+    public Country() {
+    }
+
+    public Country(Integer id, String name, Region region) {
+        this.id = id;
+        this.name = name;
+        this.region = region;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -39,4 +48,5 @@ public class Country {
     public void setRegion(Region region) {
         this.region = region;
     }
+
 }

@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@Table(name = "order")
+@Table(name = "`order`")
 public class Order {
 
     @Id
@@ -55,6 +55,144 @@ public class Order {
     private BigDecimal totalCost;
 
     @Column(name = "total_profit")
-    private BigDecimal unitProfit;
+    private BigDecimal totalProfit;
 
+    public Order() {
+    }
+
+    public Order(UUID uuid,
+                 Country country,
+                 ItemType itemType,
+                 SalesChannel salesChannel,
+                 Priority priority,
+                 LocalDate date,
+                 LocalDate ship_date,
+                 Integer unitsSold,
+                 BigDecimal unitPrice,
+                 BigDecimal unitCost,
+                 BigDecimal totalRevenue,
+                 BigDecimal totalCost,
+                 BigDecimal totalProfit) {
+        this.uuid = uuid;
+        this.country = country;
+        this.itemType = itemType;
+        this.salesChannel = salesChannel;
+        this.priority = priority;
+        this.date = date;
+        this.ship_date = ship_date;
+        this.unitsSold = unitsSold;
+        this.unitPrice = unitPrice;
+        this.unitCost = unitCost;
+        this.totalRevenue = totalRevenue;
+        this.totalCost = totalCost;
+        this.totalProfit = totalProfit;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public ItemType getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(ItemType itemType) {
+        this.itemType = itemType;
+    }
+
+    public SalesChannel getSalesChannel() {
+        return salesChannel;
+    }
+
+    public void setSalesChannel(SalesChannel salesChannel) {
+        this.salesChannel = salesChannel;
+    }
+
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalDate getShip_date() {
+        return ship_date;
+    }
+
+    public void setShip_date(LocalDate ship_date) {
+        this.ship_date = ship_date;
+    }
+
+    public Integer getUnitsSold() {
+        return unitsSold;
+    }
+
+    public void setUnitsSold(Integer unitsSold) {
+        this.unitsSold = unitsSold;
+    }
+
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public BigDecimal getUnitCost() {
+        return unitCost;
+    }
+
+    public void setUnitCost(BigDecimal unitCost) {
+        this.unitCost = unitCost;
+    }
+
+    public BigDecimal getTotalRevenue() {
+        return totalRevenue;
+    }
+
+    public void setTotalRevenue(BigDecimal totalRevenue) {
+        this.totalRevenue = totalRevenue;
+    }
+
+    public BigDecimal getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(BigDecimal totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    public BigDecimal getTotalProfit() {
+        return totalProfit;
+    }
+
+    public void setTotalProfit(BigDecimal totalProfit) {
+        this.totalProfit = totalProfit;
+    }
 }
