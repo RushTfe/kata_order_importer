@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void saveAll(List<OrderInput> orders) {
+    public void saveAll(List<OrderInput> orderInputs) {
         List<Order> orderEntities = new ArrayList<>();
 
         Map<String, Priority> priorityMap = new HashMap<>();
@@ -47,35 +47,34 @@ public class OrderServiceImpl implements OrderService {
         Map<String, Region> regionMap = new HashMap<>();
         Map<String, Country> countryMap = new HashMap<>();
 
-        for (OrderInput order : orders) {
-            Priority priority = priorityMap.computeIfAbsent(order.priority(), priorityService::findPriorityOrCreate);
+        for (OrderInput orderInput : orderInputs) {
+            Priority priority = priorityMap.computeIfAbsent(orderInput.priority(), priorityService::findPriorityOrCreate);
 
-            SalesChannel salesChannel = salesChannelMap.computeIfAbsent(order.salesChannel(), salesChannelService::findSalesChannelOrCreate);
+            SalesChannel salesChannel = salesChannelMap.computeIfAbsent(orderInput.salesChannel(), salesChannelService::findSalesChannelOrCreate);
 
-            ItemType itemType = itemTypeMap.computeIfAbsent(order.itemType(), itemTypeService::findItemTypesOrCreate);
+            ItemType itemType = itemTypeMap.computeIfAbsent(orderInput.itemType(), itemTypeService::findItemTypesOrCreate);
 
-            Region region = regionMap.computeIfAbsent(order.region(), regionService::findPriorityOrCreate);
+            Region region = regionMap.computeIfAbsent(orderInput.region(), regionService::findPriorityOrCreate);
 
             Country country = countryMap.computeIfAbsent(
-                    order.country(),
+                    orderInput.country(),
                     countryName -> countryService.findCountryOrCreate(countryName, region)
             );
 
-
             Order orderEntity = new Order(
-                    order.uuid(),
+                    orderInput.uuid(),
                     country,
                     itemType,
                     salesChannel,
                     priority,
-                    order.date(),
-                    order.shipDate(),
-                    order.unitsSold(),
-                    order.unitPrice(),
-                    order.unitCost(),
-                    order.totalRevenue(),
-                    order.totalCost(),
-                    order.totalProfit()
+                    orderInput.date(),
+                    orderInput.shipDate(),
+                    orderInput.unitsSold(),
+                    orderInput.unitPrice(),
+                    orderInput.unitCost(),
+                    orderInput.totalRevenue(),
+                    orderInput.totalCost(),
+                    orderInput.totalProfit()
             );
 
             orderEntities.add(orderEntity);
