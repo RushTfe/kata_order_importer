@@ -58,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
 
             Country country = countryMap.computeIfAbsent(
                     order.country(),
-                    countryName -> countryService.findCountryOrCreate(countryName, regionMap.get(order.region()))
+                    countryName -> countryService.findCountryOrCreate(countryName, region)
             );
 
 
