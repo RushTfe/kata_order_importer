@@ -1,8 +1,6 @@
 package com.pgalindo.kata.order.importer.service.impl;
 
 import com.pgalindo.kata.order.importer.model.entity.*;
-import com.pgalindo.kata.order.importer.model.helper.CountryHelper;
-import com.pgalindo.kata.order.importer.model.helper.OrderSaveHelper;
 import com.pgalindo.kata.order.importer.model.service.OrderInput;
 import com.pgalindo.kata.order.importer.repository.OrderRepository;
 import com.pgalindo.kata.order.importer.service.*;
@@ -47,7 +45,6 @@ public class OrderServiceImpl implements OrderService {
         Map<String, SalesChannel> salesChannelMap = new HashMap<>();
         Map<String, ItemType> itemTypeMap = new HashMap<>();
         Map<String, Region> regionMap = new HashMap<>();
-        Map<String, CountryHelper> countryHelperMap = new HashMap<>();
         Map<String, Country> countryMap = new HashMap<>();
 
         for (OrderInput order : orders) {
@@ -61,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
 
             Country country = countryMap.computeIfAbsent(
                     order.country(),
-                    countryName ->countryService.findCountryOrCreate(countryName, regionMap.get(order.region()))
+                    countryName -> countryService.findCountryOrCreate(countryName, regionMap.get(order.region()))
             );
 
 
