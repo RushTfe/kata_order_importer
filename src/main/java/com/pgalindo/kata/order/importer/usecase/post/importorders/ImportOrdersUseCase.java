@@ -6,8 +6,8 @@ import com.pgalindo.kata.order.importer.model.helper.RelationCacheHelper;
 import com.pgalindo.kata.order.importer.model.mapper.ClientMapper;
 import com.pgalindo.kata.order.importer.model.service.OrderInput;
 import com.pgalindo.kata.order.importer.service.OrderService;
-import com.pgalindo.kata.order.importer.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -18,19 +18,24 @@ public class ImportOrdersUseCase {
     private final ClientMapper clientMapper;
     private final EspublicoClient espublicoClient;
     private final OrderService orderService;
+    private final Integer MAX_ORDERS_PER_PAGE;
 
     @Autowired
-    public ImportOrdersUseCase(ClientMapper clientMapper, EspublicoClient espublicoClient, OrderService orderService) {
+    public ImportOrdersUseCase(ClientMapper clientMapper,
+                               EspublicoClient espublicoClient,
+                               OrderService orderService,
+                               @Value("${koi.client.request.maxOrdersPerPage}") Integer maxOrdersPerPage) {
         this.clientMapper = clientMapper;
         this.espublicoClient = espublicoClient;
         this.orderService = orderService;
+        this.MAX_ORDERS_PER_PAGE = maxOrdersPerPage;
     }
 
     public void importOrders() {
 
         RelationCacheHelper cacheHelper = new RelationCacheHelper();
 
-        EspublicoClientResponse clientResponse = espublicoClient.getOrders(1, 10);
+        EspublicoClientResponse clientResponse = espublicoClient.getOrders(1, MAX_ORDERS_PER_PAGE);
 
         List<OrderInput> orders = clientResponse.content()
                 .stream()
