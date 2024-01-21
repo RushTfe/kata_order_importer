@@ -2,6 +2,7 @@ package com.pgalindo.kata.order.importer.service.impl;
 
 import com.pgalindo.kata.order.importer.model.entity.*;
 import com.pgalindo.kata.order.importer.model.helper.RelationCacheHelper;
+import com.pgalindo.kata.order.importer.model.mapper.OrderMapper;
 import com.pgalindo.kata.order.importer.model.service.OrderInput;
 import com.pgalindo.kata.order.importer.repository.OrderRepository;
 import com.pgalindo.kata.order.importer.service.*;
@@ -15,6 +16,7 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
+    private final OrderMapper orderMapper;
     private final PriorityService priorityService;
     private final SalesChannelService salesChannelService;
     private final ItemTypeService itemTypeService;
@@ -23,12 +25,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository,
+                            OrderMapper orderMapper,
                             PriorityService priorityService,
                             SalesChannelService salesChannelService,
                             ItemTypeService itemTypeService,
                             RegionService regionService,
                             CountryService countryService) {
         this.orderRepository = orderRepository;
+        this.orderMapper = orderMapper;
         this.priorityService = priorityService;
         this.salesChannelService = salesChannelService;
         this.itemTypeService = itemTypeService;
@@ -67,20 +71,6 @@ public class OrderServiceImpl implements OrderService {
                 countryName -> countryService.findCountryOrCreate(countryName, region)
         );
 
-        return new Order(
-                orderInput.uuid(),
-                country,
-                itemType,
-                salesChannel,
-                priority,
-                orderInput.date(),
-                orderInput.shipDate(),
-                orderInput.unitsSold(),
-                orderInput.unitPrice(),
-                orderInput.unitCost(),
-                orderInput.totalRevenue(),
-                orderInput.totalCost(),
-                orderInput.totalProfit()
-        );
+        return orderMapper.orderInputToOrder(orderInput, priority, salesChannel, itemType, country);
     }
 }

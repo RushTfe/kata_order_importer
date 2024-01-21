@@ -37,7 +37,7 @@ public class Order {
     private LocalDate date;
 
     @Column(name = "ship_date", columnDefinition = "DATE")
-    private LocalDate ship_date;
+    private LocalDate shipDate;
 
     @Column(name = "units_sold")
     private Integer unitsSold;
@@ -66,7 +66,7 @@ public class Order {
                  SalesChannel salesChannel,
                  Priority priority,
                  LocalDate date,
-                 LocalDate ship_date,
+                 LocalDate shipDate,
                  Integer unitsSold,
                  BigDecimal unitPrice,
                  BigDecimal unitCost,
@@ -79,7 +79,7 @@ public class Order {
         this.salesChannel = salesChannel;
         this.priority = priority;
         this.date = date;
-        this.ship_date = ship_date;
+        this.shipDate = shipDate;
         this.unitsSold = unitsSold;
         this.unitPrice = unitPrice;
         this.unitCost = unitCost;
@@ -140,12 +140,12 @@ public class Order {
         this.date = date;
     }
 
-    public LocalDate getShip_date() {
-        return ship_date;
+    public LocalDate getShipDate() {
+        return shipDate;
     }
 
-    public void setShip_date(LocalDate ship_date) {
-        this.ship_date = ship_date;
+    public void setShipDate(LocalDate shipDate) {
+        this.shipDate = shipDate;
     }
 
     public Integer getUnitsSold() {
