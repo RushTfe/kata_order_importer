@@ -20,7 +20,7 @@ public class PriorityServiceImpl implements PriorityService {
 
     @Override
     public Priority findPriorityOrCreate(String priorityName) {
-        Optional<Priority> priority = priorityRepository.findByName(priorityName);
+        Optional<Priority> priority = priorityRepository.findByNameIgnoreCase(priorityName);
 
         if (priority.isPresent()) {
             return priority.get();

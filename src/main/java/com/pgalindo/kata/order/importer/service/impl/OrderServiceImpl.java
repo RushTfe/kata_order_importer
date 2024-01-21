@@ -1,16 +1,14 @@
 package com.pgalindo.kata.order.importer.service.impl;
 
 import com.pgalindo.kata.order.importer.model.entity.*;
+import com.pgalindo.kata.order.importer.model.helper.RelationCacheHelper;
 import com.pgalindo.kata.order.importer.model.service.OrderInput;
 import com.pgalindo.kata.order.importer.repository.OrderRepository;
 import com.pgalindo.kata.order.importer.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -39,47 +37,44 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void saveAll(List<OrderInput> orderInputs) {
-        List<Order> orderEntities = new ArrayList<>();
+        RelationCacheHelper relationCacheHelper = new RelationCacheHelper();
 
-        Map<String, Priority> priorityMap = new HashMap<>();
-        Map<String, SalesChannel> salesChannelMap = new HashMap<>();
-        Map<String, ItemType> itemTypeMap = new HashMap<>();
-        Map<String, Region> regionMap = new HashMap<>();
-        Map<String, Country> countryMap = new HashMap<>();
-
-        for (OrderInput orderInput : orderInputs) {
-            Priority priority = priorityMap.computeIfAbsent(orderInput.priority(), priorityService::findPriorityOrCreate);
-
-            SalesChannel salesChannel = salesChannelMap.computeIfAbsent(orderInput.salesChannel(), salesChannelService::findSalesChannelOrCreate);
-
-            ItemType itemType = itemTypeMap.computeIfAbsent(orderInput.itemType(), itemTypeService::findItemTypesOrCreate);
-
-            Region region = regionMap.computeIfAbsent(orderInput.region(), regionService::findPriorityOrCreate);
-
-            Country country = countryMap.computeIfAbsent(
-                    orderInput.country(),
-                    countryName -> countryService.findCountryOrCreate(countryName, region)
-            );
-
-            Order orderEntity = new Order(
-                    orderInput.uuid(),
-                    country,
-                    itemType,
-                    salesChannel,
-                    priority,
-                    orderInput.date(),
-                    orderInput.shipDate(),
-                    orderInput.unitsSold(),
-                    orderInput.unitPrice(),
-                    orderInput.unitCost(),
-                    orderInput.totalRevenue(),
-                    orderInput.totalCost(),
-                    orderInput.totalProfit()
-            );
-
-            orderEntities.add(orderEntity);
-        }
+        List<Order> orderEntities = orderInputs
+                .stream()
+                .map(orderInput -> createNewOrder(orderInput, relationCacheHelper))
+        .toList();
 
         orderRepository.saveAll(orderEntities);
+    }
+
+    private Order createNewOrder(OrderInput orderInput, RelationCacheHelper relationCacheHelper) {
+        Priority priority = relationCacheHelper.priorityMap().computeIfAbsent(orderInput.priority(), priorityService::findPriorityOrCreate);
+
+        SalesChannel salesChannel = relationCacheHelper.salesChannelMap().computeIfAbsent(orderInput.salesChannel(), salesChannelService::findSalesChannelOrCreate);
+
+        ItemType itemType = relationCacheHelper.itemTypeMap().computeIfAbsent(orderInput.itemType(), itemTypeService::findItemTypesOrCreate);
+
+        Region region = relationCacheHelper.regionMap().computeIfAbsent(orderInput.region(), regionService::findPriorityOrCreate);
+
+        Country country = relationCacheHelper.countryMap().computeIfAbsent(
+                orderInput.country(),
+                countryName -> countryService.findCountryOrCreate(countryName, region)
+        );
+
+        return new Order(
+                orderInput.uuid(),
+                country,
+                itemType,
+                salesChannel,
+                priority,
+                orderInput.date(),
+                orderInput.shipDate(),
+                orderInput.unitsSold(),
+                orderInput.unitPrice(),
+                orderInput.unitCost(),
+                orderInput.totalRevenue(),
+                orderInput.totalCost(),
+                orderInput.totalProfit()
+        );
     }
 }

@@ -20,7 +20,7 @@ public class RegionServiceImpl implements RegionService {
 
     @Override
     public Region findPriorityOrCreate(String regionName) {
-        Optional<Region> region = regionRepository.findByName(regionName);
+        Optional<Region> region = regionRepository.findByNameIgnoreCase(regionName);
 
         if (region.isPresent()) {
             return region.get();

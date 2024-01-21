@@ -23,7 +23,7 @@ public class SalesChannelServiceImpl implements SalesChannelService {
 
     @Override
     public SalesChannel findSalesChannelOrCreate(String salesChannelName) {
-        Optional<SalesChannel> salesChannel = salesChannelRepository.findByName(salesChannelName);
+        Optional<SalesChannel> salesChannel = salesChannelRepository.findByNameIgnoreCase(salesChannelName);
 
         if (salesChannel.isPresent()) {
             return salesChannel.get();

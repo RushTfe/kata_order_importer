@@ -23,7 +23,7 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public Country findCountryOrCreate(String countryName, Region region) {
-        Optional<Country> country = countryRepository.findByName(countryName);
+        Optional<Country> country = countryRepository.findByNameIgnoreCase(countryName);
 
         if (country.isPresent()) {
             return country.get();

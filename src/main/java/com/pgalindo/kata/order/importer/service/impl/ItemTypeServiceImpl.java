@@ -20,7 +20,7 @@ public class ItemTypeServiceImpl implements ItemTypeService {
 
     @Override
     public ItemType findItemTypesOrCreate(String itemTypeName) {
-        Optional<ItemType> itemType = itemTypeRepository.findByName(itemTypeName);
+        Optional<ItemType> itemType = itemTypeRepository.findByNameIgnoreCase(itemTypeName);
 
         if (itemType.isPresent()) {
             return itemType.get();

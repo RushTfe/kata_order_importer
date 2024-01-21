@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface PriorityRepository extends JpaRepository<Priority, Long> {
-    Optional<Priority> findByName(String priority);
+    Optional<Priority> findByNameIgnoreCase(String priority);
 }
