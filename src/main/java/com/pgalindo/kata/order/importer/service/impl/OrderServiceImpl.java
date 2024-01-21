@@ -37,6 +37,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void saveAll(List<OrderInput> orderInputs) {
+
         RelationCacheHelper relationCacheHelper = new RelationCacheHelper();
 
         List<Order> orderEntities = orderInputs
@@ -48,15 +49,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private Order createNewOrder(OrderInput orderInput, RelationCacheHelper relationCacheHelper) {
-        Priority priority = relationCacheHelper.priorityMap().computeIfAbsent(orderInput.priority(), priorityService::findPriorityOrCreate);
-
-        SalesChannel salesChannel = relationCacheHelper.salesChannelMap().computeIfAbsent(orderInput.salesChannel(), salesChannelService::findSalesChannelOrCreate);
-
-        ItemType itemType = relationCacheHelper.itemTypeMap().computeIfAbsent(orderInput.itemType(), itemTypeService::findItemTypesOrCreate);
-
-        Region region = relationCacheHelper.regionMap().computeIfAbsent(orderInput.region(), regionService::findPriorityOrCreate);
-
-        Country country = relationCacheHelper.countryMap().computeIfAbsent(
+        Priority priority = relationCacheHelper.getPriority(orderInput.priority(), priorityService::findPriorityOrCreate);
+        SalesChannel salesChannel = relationCacheHelper.getSalesChannel(orderInput.salesChannel(), salesChannelService::findSalesChannelOrCreate);
+        ItemType itemType = relationCacheHelper.getItemType(orderInput.itemType(), itemTypeService::findItemTypesOrCreate);
+        Region region = relationCacheHelper.getRegion(orderInput.region(), regionService::findPriorityOrCreate);
+        Country country = relationCacheHelper.getCountry(
                 orderInput.country(),
                 countryName -> countryService.findCountryOrCreate(countryName, region)
         );

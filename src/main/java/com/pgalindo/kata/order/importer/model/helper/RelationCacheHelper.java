@@ -4,6 +4,7 @@ import com.pgalindo.kata.order.importer.model.entity.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 public record RelationCacheHelper(
         Map<String, Priority> priorityMap,
@@ -26,5 +27,25 @@ public record RelationCacheHelper(
 
     public RelationCacheHelper() {
         this(new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>());
+    }
+
+    public Priority getPriority(String priorityName, Function<? super String, ? extends Priority> mappingFunction) {
+        return this.priorityMap.computeIfAbsent(priorityName, mappingFunction);
+    }
+
+    public SalesChannel getSalesChannel(String salesChannelName, Function<? super String, ? extends SalesChannel> mappingFunction) {
+        return this.salesChannelMap.computeIfAbsent(salesChannelName, mappingFunction);
+    }
+
+    public ItemType getItemType(String itemTypeName, Function<? super String, ? extends ItemType> mappingFunction) {
+        return this.itemTypeMap.computeIfAbsent(itemTypeName, mappingFunction);
+    }
+
+    public Region getRegion(String regionName, Function<? super String, ? extends Region> mappingFunction) {
+        return this.regionMap.computeIfAbsent(regionName, mappingFunction);
+    }
+
+    public Country getCountry(String countryName, Function<? super String, ? extends Country> mappingFunction) {
+        return countryMap().computeIfAbsent(countryName, mappingFunction);
     }
 }
