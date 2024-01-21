@@ -35,13 +35,19 @@ public class ImportOrdersUseCase {
 
         RelationCacheHelper cacheHelper = new RelationCacheHelper();
 
-        EspublicoClientResponse clientResponse = espublicoClient.getOrders(1, MAX_ORDERS_PER_PAGE);
+        int page = 1;
 
-        List<OrderInput> orders = clientResponse.content()
-                .stream()
-                .map(clientMapper::orderClientResponseToOrderInput)
-                .toList();
+        while (page <= 2500) {
+            EspublicoClientResponse clientResponse = espublicoClient.getOrders(page, MAX_ORDERS_PER_PAGE);
 
-        orderService.saveAll(orders, cacheHelper);
+            List<OrderInput> orders = clientResponse.content()
+                    .stream()
+                    .map(clientMapper::orderClientResponseToOrderInput)
+                    .toList();
+
+            orderService.saveAll(orders, cacheHelper);
+
+            page++;
+        }
     }
 }
