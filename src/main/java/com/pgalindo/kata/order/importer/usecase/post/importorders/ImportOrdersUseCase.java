@@ -1,23 +1,25 @@
 package com.pgalindo.kata.order.importer.usecase.post.importorders;
 
+import com.pgalindo.kata.order.importer.clients.EspublicoClient;
+import com.pgalindo.kata.order.importer.model.client.EspublicoClientResponse;
 import com.pgalindo.kata.order.importer.model.helper.RelationCacheHelper;
 import com.pgalindo.kata.order.importer.model.service.OrderInput;
 import com.pgalindo.kata.order.importer.service.OrderService;
+import com.pgalindo.kata.order.importer.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 @Component
 public class ImportOrdersUseCase {
 
+    private final EspublicoClient espublicoClient;
     private final OrderService orderService;
 
     @Autowired
-    public ImportOrdersUseCase(OrderService orderService) {
+    public ImportOrdersUseCase(EspublicoClient espublicoClient, OrderService orderService) {
+        this.espublicoClient = espublicoClient;
         this.orderService = orderService;
     }
 
@@ -25,42 +27,28 @@ public class ImportOrdersUseCase {
 
         RelationCacheHelper cacheHelper = new RelationCacheHelper();
 
-        List<OrderInput> orders = List.of(
-                new OrderInput(
-                        UUID.randomUUID(),
-                        1L,
-                        "Europe",
-                        "Spain",
-                        "Fruits",
-                        "Offline",
-                        "M",
-                        LocalDate.now(),
-                        LocalDate.now(),
-                        2,
-                        new BigDecimal("5"),
-                        BigDecimal.ONE,
-                        BigDecimal.TEN,
-                        new BigDecimal("2"),
-                        new BigDecimal("8")
-                        ),
-                new OrderInput(
-                        UUID.randomUUID(),
-                        1L,
-                        "Europe",
-                        "France",
-                        "Fruits",
-                        "Offline",
-                        "M",
-                        LocalDate.now(),
-                        LocalDate.now(),
-                        2,
-                        new BigDecimal("5"),
-                        BigDecimal.ONE,
-                        BigDecimal.TEN,
-                        new BigDecimal("2"),
-                        new BigDecimal("8")
-                )
-        );
+        EspublicoClientResponse clientResponse = espublicoClient.getOrders(1, 10);
+
+        List<OrderInput> orders = clientResponse.content().stream().map(orderClientResponse ->
+            new OrderInput(
+                    orderClientResponse.uuid(),
+                    orderClientResponse.id(),
+                    orderClientResponse.region(),
+                    orderClientResponse.country(),
+                    orderClientResponse.itemType(),
+                    orderClientResponse.salesChannel(),
+                    orderClientResponse.priority(),
+                    DateUtils.clientStringToLocalDate(orderClientResponse.date()),
+                    DateUtils.clientStringToLocalDate(orderClientResponse.shipDate()),
+                    orderClientResponse.unitsSold(),
+                    orderClientResponse.unitPrice(),
+                    orderClientResponse.unitCost(),
+                    orderClientResponse.totalRevenue(),
+                    orderClientResponse.totalCost(),
+                    orderClientResponse.totalProfit()
+            )
+        )
+        .toList();
 
         orderService.saveAll(orders, cacheHelper);
     }
