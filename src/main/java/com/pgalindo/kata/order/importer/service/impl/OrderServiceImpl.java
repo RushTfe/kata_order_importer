@@ -36,24 +36,28 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void saveAll(List<OrderInput> orderInputs) {
-
-        RelationCacheHelper relationCacheHelper = new RelationCacheHelper();
+    public void saveAll(List<OrderInput> orderInputs, RelationCacheHelper cacheHelper) {
+        // TODO PARA MAÑANA:
+        // Pasar caché al caso de uso
+        // Añadir dependencia de Feign client
+        // Llamar al GET de Espublico (Con una cantidad moderada de datos, por ejemplo, unos 100 divididos en 2 páginas)
+        // Testear si todo es correcto
+        // Circuit breaker?
 
         List<Order> orderEntities = orderInputs
                 .stream()
-                .map(orderInput -> createNewOrder(orderInput, relationCacheHelper))
+                .map(orderInput -> createNewOrder(orderInput, cacheHelper))
         .toList();
 
         orderRepository.saveAll(orderEntities);
     }
 
-    private Order createNewOrder(OrderInput orderInput, RelationCacheHelper relationCacheHelper) {
-        Priority priority = relationCacheHelper.getPriority(orderInput.priority(), priorityService::findPriorityOrCreate);
-        SalesChannel salesChannel = relationCacheHelper.getSalesChannel(orderInput.salesChannel(), salesChannelService::findSalesChannelOrCreate);
-        ItemType itemType = relationCacheHelper.getItemType(orderInput.itemType(), itemTypeService::findItemTypesOrCreate);
-        Region region = relationCacheHelper.getRegion(orderInput.region(), regionService::findPriorityOrCreate);
-        Country country = relationCacheHelper.getCountry(
+    private Order createNewOrder(OrderInput orderInput, RelationCacheHelper cacheHelper) {
+        Priority priority = cacheHelper.getPriority(orderInput.priority(), priorityService::findPriorityOrCreate);
+        SalesChannel salesChannel = cacheHelper.getSalesChannel(orderInput.salesChannel(), salesChannelService::findSalesChannelOrCreate);
+        ItemType itemType = cacheHelper.getItemType(orderInput.itemType(), itemTypeService::findItemTypesOrCreate);
+        Region region = cacheHelper.getRegion(orderInput.region(), regionService::findPriorityOrCreate);
+        Country country = cacheHelper.getCountry(
                 orderInput.country(),
                 countryName -> countryService.findCountryOrCreate(countryName, region)
         );

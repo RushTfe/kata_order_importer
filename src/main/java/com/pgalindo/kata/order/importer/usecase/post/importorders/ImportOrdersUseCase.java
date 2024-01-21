@@ -1,5 +1,6 @@
 package com.pgalindo.kata.order.importer.usecase.post.importorders;
 
+import com.pgalindo.kata.order.importer.model.helper.RelationCacheHelper;
 import com.pgalindo.kata.order.importer.model.service.OrderInput;
 import com.pgalindo.kata.order.importer.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class ImportOrdersUseCase {
     }
 
     public void importOrders() {
+
+        RelationCacheHelper cacheHelper = new RelationCacheHelper();
 
         List<OrderInput> orders = List.of(
                 new OrderInput(
@@ -59,6 +62,6 @@ public class ImportOrdersUseCase {
                 )
         );
 
-        orderService.saveAll(orders);
+        orderService.saveAll(orders, cacheHelper);
     }
 }
