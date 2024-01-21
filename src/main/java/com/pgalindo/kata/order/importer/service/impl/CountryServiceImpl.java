@@ -3,9 +3,7 @@ package com.pgalindo.kata.order.importer.service.impl;
 import com.pgalindo.kata.order.importer.model.entity.Country;
 import com.pgalindo.kata.order.importer.model.entity.Region;
 import com.pgalindo.kata.order.importer.repository.CountryRepository;
-import com.pgalindo.kata.order.importer.repository.RegionRepository;
 import com.pgalindo.kata.order.importer.service.CountryService;
-import com.pgalindo.kata.order.importer.service.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +31,10 @@ public class CountryServiceImpl implements CountryService {
         newCountry.setName(countryName);
         newCountry.setRegion(region);
         return countryRepository.save(newCountry);
+    }
+
+    @Override
+    public void clearTable() {
+        countryRepository.deleteCountries();
     }
 }

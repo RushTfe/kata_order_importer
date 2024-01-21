@@ -29,4 +29,9 @@ public class ItemTypeServiceImpl implements ItemTypeService {
         newItemType.setName(itemTypeName);
         return itemTypeRepository.save(newItemType);
     }
+
+    @Override
+    public void clearTable() {
+        itemTypeRepository.deleteItemTypes();
+    }
 }

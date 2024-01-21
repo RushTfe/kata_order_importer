@@ -5,6 +5,7 @@ import com.pgalindo.kata.order.importer.model.helper.RelationCacheHelper;
 import com.pgalindo.kata.order.importer.model.service.OrderInput;
 import com.pgalindo.kata.order.importer.repository.OrderRepository;
 import com.pgalindo.kata.order.importer.service.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,19 +38,23 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void saveAll(List<OrderInput> orderInputs, RelationCacheHelper cacheHelper) {
-        // TODO PARA MAÑANA:
-        // Pasar caché al caso de uso
-        // Añadir dependencia de Feign client
-        // Llamar al GET de Espublico (Con una cantidad moderada de datos, por ejemplo, unos 100 divididos en 2 páginas)
-        // Testear si todo es correcto
-        // Circuit breaker?
-
         List<Order> orderEntities = orderInputs
                 .stream()
                 .map(orderInput -> createNewOrder(orderInput, cacheHelper))
-        .toList();
+                .toList();
 
         orderRepository.saveAll(orderEntities);
+    }
+
+    @Override
+    @Transactional
+    public void removeOrders() {
+        orderRepository.deleteOrders();
+        countryService.clearTable();
+        regionService.clearTable();
+        itemTypeService.clearTable();
+        priorityService.clearTable();
+        salesChannelService.clearTable();
     }
 
     private Order createNewOrder(OrderInput orderInput, RelationCacheHelper cacheHelper) {

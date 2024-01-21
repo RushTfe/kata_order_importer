@@ -29,4 +29,9 @@ public class PriorityServiceImpl implements PriorityService {
         newPriority.setName(priorityName);
         return priorityRepository.save(newPriority);
     }
+
+    @Override
+    public void clearTable() {
+        priorityRepository.deletePriorities();
+    }
 }

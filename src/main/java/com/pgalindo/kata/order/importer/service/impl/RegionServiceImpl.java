@@ -29,4 +29,9 @@ public class RegionServiceImpl implements RegionService {
         newRegion.setName(regionName);
         return regionRepository.save(newRegion);
     }
+
+    @Override
+    public void clearTable() {
+        regionRepository.deleteRegions();
+    }
 }

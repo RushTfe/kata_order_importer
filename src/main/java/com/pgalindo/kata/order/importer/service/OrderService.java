@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface OrderService {
     void saveAll(List<OrderInput> orders, RelationCacheHelper cacheHelper);
+    void removeOrders();
 }
