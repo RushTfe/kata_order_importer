@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @Component
@@ -46,13 +48,11 @@ public class ImportOrdersUseCase {
         int page = 1;
 
         while (page <= 10) {
-            logger.info("Se lanza petición a espublico");
-
             long millisBeforeClientRequest = System.currentTimeMillis();
             EspublicoClientResponse clientResponse = espublicoClient.getOrders(page, MAX_ORDERS_PER_PAGE);
             long millisAfterClientRequest = System.currentTimeMillis();
 
-            logger.info("La petición ha tomado un total de {} millis en ejecutare", millisAfterClientRequest-millisBeforeClientRequest);
+            logger.info("La petición ha tomado un total de {} segundos en ejecutare", toSeconds(millisAfterClientRequest, millisBeforeClientRequest));
 
             List<OrderInput> orders = clientResponse.content()
                     .stream()
@@ -66,6 +66,10 @@ public class ImportOrdersUseCase {
 
         long millisEndUseCase = System.currentTimeMillis();
 
-        logger.info("Se finaliza el caso de uso para importar órdenes. Ha tomado un total de {} millis en ejecutarse", millisEndUseCase-millisStartUseCase);
+        logger.info("Se finaliza el caso de uso para importar órdenes. Ha tomado un total de {} segundos en ejecutarse", toSeconds(millisEndUseCase, millisStartUseCase));
+    }
+
+    private float toSeconds(long millisAfter, long millisBefore) {
+        return (float) (millisAfter - millisBefore) / 1000;
     }
 }

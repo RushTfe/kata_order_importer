@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @Service
@@ -50,8 +52,6 @@ public class OrderServiceImpl implements OrderService {
 
         long millisStartService = System.currentTimeMillis();
 
-        logger.info("Se inicia servicio para importar batch de órdenes");
-
         List<Order> orderEntities = orderInputs
                 .stream()
                 .map(orderInput -> createNewOrder(orderInput, cacheHelper))
@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
 
         long millisEndService = System.currentTimeMillis();
 
-        logger.info("Se finaliza servicio para importar batch de órdenes. Ha tomado un total de {} millis en ejecutarse", millisStartService - millisEndService);
+        logger.info("Se finaliza servicio para importar batch de órdenes. Ha tomado un total de {} segundos en ejecutarse", toSeconds(millisEndService, millisStartService));
     }
 
     @Override
@@ -86,5 +86,9 @@ public class OrderServiceImpl implements OrderService {
         );
 
         return orderMapper.orderInputToOrder(orderInput, priority, salesChannel, itemType, country);
+    }
+
+    private float toSeconds(long millisAfter, long millisBefore) {
+        return (float) (millisAfter - millisBefore) / 1000;
     }
 }
