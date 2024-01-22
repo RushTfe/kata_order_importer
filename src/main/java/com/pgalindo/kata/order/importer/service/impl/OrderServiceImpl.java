@@ -6,7 +6,10 @@ import com.pgalindo.kata.order.importer.model.mapper.OrderMapper;
 import com.pgalindo.kata.order.importer.model.service.OrderInput;
 import com.pgalindo.kata.order.importer.repository.OrderRepository;
 import com.pgalindo.kata.order.importer.service.*;
+import com.pgalindo.kata.order.importer.usecase.post.importorders.ImportOrdersUseCase;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,8 @@ import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+
+    private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
@@ -42,12 +47,21 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void saveAll(List<OrderInput> orderInputs, RelationCacheHelper cacheHelper) {
+
+        long millisStartService = System.currentTimeMillis();
+
+        logger.info("Se inicia servicio para importar batch de órdenes");
+
         List<Order> orderEntities = orderInputs
                 .stream()
                 .map(orderInput -> createNewOrder(orderInput, cacheHelper))
                 .toList();
 
         orderRepository.saveAll(orderEntities);
+
+        long millisEndService = System.currentTimeMillis();
+
+        logger.info("Se finaliza servicio para importar batch de órdenes. Ha tomado un total de {} millis en ejecutarse", millisStartService - millisEndService);
     }
 
     @Override
