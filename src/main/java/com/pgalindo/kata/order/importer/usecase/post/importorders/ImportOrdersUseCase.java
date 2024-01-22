@@ -27,7 +27,7 @@ public class ImportOrdersUseCase {
     private final Integer MAX_ORDERS_PER_PAGE;
     private final Integer PAGE_BUFFER;
     private final boolean IMPORT_ALL;
-    private final Integer PAGES_TO_IMPORT = 300;
+    private final Integer PAGES_TO_IMPORT = 200;
 
     @Autowired
     public ImportOrdersUseCase(ClientMapper clientMapper,
@@ -35,7 +35,7 @@ public class ImportOrdersUseCase {
                                OrderService orderService,
                                @Value("${koi.client.request.maxOrdersPerPage}") Integer maxOrdersPerPage,
                                @Value("${koi.client.request.page-buffer}") Integer pageBuffer,
-                               @Value("${koi.client.request.import-all}")boolean importAll) {
+                               @Value("${koi.client.request.import-all}") boolean importAll) {
         this.clientMapper = clientMapper;
         this.espublicoClient = espublicoClient;
         this.orderService = orderService;
@@ -60,30 +60,21 @@ public class ImportOrdersUseCase {
         RelationCacheHelper cacheHelper = new RelationCacheHelper();
 
         int page = 1;
+        EspublicoClientResponse clientResponse;
 
-        EspublicoClientResponse clientResponse = makeClientCall(page);
-        batch.addAll(buildOrderInputs(clientResponse));
-
-        page++;
-
-        while (hasNextPage(page, clientResponse)) {
-
+        do {
+            logger.info("Cargando la página número en el buffer {}...", page);
             clientResponse = makeClientCall(page);
             batch.addAll(buildOrderInputs(clientResponse));
 
-            if (batch.size() == batchSize) {
+            page++;
+
+            if (batch.size() == batchSize || !hasNextPage(page, clientResponse)) {
                 orderService.saveAll(batch, cacheHelper);
                 batch.clear();
             }
-
-            page++;
         }
-
-        if (!batch.isEmpty()) {
-            logger.info("Insert spare batch");
-            orderService.saveAll(batch, cacheHelper);
-            batch.clear();
-        }
+        while (hasNextPage(page, clientResponse));
 
         long millisEndUseCase = System.currentTimeMillis();
 
