@@ -1,11 +1,11 @@
-package com.pgalindo.kata.order.importer.model.client;
+package com.pgalindo.kata.order.importer.clients.espublico.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
-public record OrderClientResponse(
+public record EspublicoOrderClientResponse(
         UUID uuid,
         Long id,
         String region,

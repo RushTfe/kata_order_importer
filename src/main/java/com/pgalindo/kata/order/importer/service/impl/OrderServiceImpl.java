@@ -6,6 +6,7 @@ import com.pgalindo.kata.order.importer.model.mapper.OrderMapper;
 import com.pgalindo.kata.order.importer.model.service.OrderInput;
 import com.pgalindo.kata.order.importer.repository.OrderRepository;
 import com.pgalindo.kata.order.importer.service.*;
+import com.pgalindo.kata.order.importer.utils.TimeUtils;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void saveAll(List<OrderInput> orderInputs, RelationCacheHelper cacheHelper) {
 
-        logger.info("Se inicia el servicio para guardar un total de {} órdenes", orderInputs.size());
+        logger.info("Started order importing service. a total of {} orders will be saved.", orderInputs.size());
 
         long millisStartService = System.currentTimeMillis();
 
@@ -60,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
 
         long millisEndService = System.currentTimeMillis();
 
-        logger.info("Se finaliza servicio para importar batch de órdenes. Ha tomado un total de {} segundos en ejecutarse", toSeconds(millisEndService, millisStartService));
+        logger.info("Finished order importing service. Took {} seconds to execute.", TimeUtils.elapsedMillisToSeconds(millisEndService, millisStartService));
     }
 
     @Override
@@ -76,9 +77,13 @@ public class OrderServiceImpl implements OrderService {
 
     private Order createNewOrder(OrderInput orderInput, RelationCacheHelper cacheHelper) {
         Priority priority = cacheHelper.getPriority(orderInput.priority(), priorityService::findPriorityOrCreate);
+
         SalesChannel salesChannel = cacheHelper.getSalesChannel(orderInput.salesChannel(), salesChannelService::findSalesChannelOrCreate);
+
         ItemType itemType = cacheHelper.getItemType(orderInput.itemType(), itemTypeService::findItemTypesOrCreate);
+
         Region region = cacheHelper.getRegion(orderInput.region(), regionService::findPriorityOrCreate);
+
         Country country = cacheHelper.getCountry(
                 orderInput.country(),
                 countryName -> countryService.findCountryOrCreate(countryName, region)
@@ -87,7 +92,4 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.orderInputToOrder(orderInput, priority, salesChannel, itemType, country);
     }
 
-    private float toSeconds(long millisAfter, long millisBefore) {
-        return (float) (millisAfter - millisBefore) / 1000;
-    }
 }

@@ -1,6 +1,6 @@
-package com.pgalindo.kata.order.importer.clients;
+package com.pgalindo.kata.order.importer.clients.espublico;
 
-import com.pgalindo.kata.order.importer.model.client.EspublicoClientResponse;
+import com.pgalindo.kata.order.importer.clients.espublico.model.EspublicoClientResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
