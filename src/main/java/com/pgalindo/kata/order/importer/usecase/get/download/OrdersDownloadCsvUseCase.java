@@ -4,6 +4,7 @@ import com.pgalindo.kata.order.importer.model.OrderCsvLineDto;
 import com.pgalindo.kata.order.importer.service.OrderService;
 import com.pgalindo.kata.order.importer.usecase.post.importorders.ImportOrdersUseCase;
 import com.pgalindo.kata.order.importer.utils.CsvGenerator;
+import com.pgalindo.kata.order.importer.utils.TimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,16 @@ public class OrdersDownloadCsvUseCase {
                 "totalProfit"
                 );
 
+        long startTimestamp = System.currentTimeMillis();
         List<OrderCsvLineDto> csvLines = orderService.findAllForCsv();
+        long endTimestamp = System.currentTimeMillis();
+
+        float elapsedTime = TimeUtils.elapsedMillisToSeconds(endTimestamp, startTimestamp);
+
+        logger.info("Query took {} seconds to execute", elapsedTime);
+
+
+
         try {
             CsvGenerator csvGenerator = new CsvGenerator(writer, headers);
 
