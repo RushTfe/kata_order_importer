@@ -46,7 +46,7 @@ public class OrdersDownloadCsvUseCase {
                 "totalRevenue",
                 "totalCost",
                 "totalProfit"
-                );
+        );
 
         long startTimestamp = System.currentTimeMillis();
         List<OrderCsvLineDto> csvLines = orderService.findAllForCsv();
@@ -55,8 +55,6 @@ public class OrdersDownloadCsvUseCase {
         float elapsedTime = TimeUtils.elapsedMillisToSeconds(endTimestamp, startTimestamp);
 
         logger.info("Query took {} seconds to execute", elapsedTime);
-
-
 
         try {
             CsvGenerator csvGenerator = new CsvGenerator(writer, headers);
