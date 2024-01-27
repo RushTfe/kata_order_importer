@@ -1,5 +1,6 @@
 package com.pgalindo.kata.order.importer.service.impl;
 
+import com.pgalindo.kata.order.importer.model.OrderCsvLineDto;
 import com.pgalindo.kata.order.importer.model.entity.*;
 import com.pgalindo.kata.order.importer.model.helper.RelationCacheHelper;
 import com.pgalindo.kata.order.importer.model.mapper.OrderMapper;
@@ -43,6 +44,27 @@ public class OrderServiceImpl implements OrderService {
         this.itemTypeService = itemTypeService;
         this.regionService = regionService;
         this.countryService = countryService;
+    }
+
+    @Override
+    public List<OrderCsvLineDto> findAllForCsv() {
+        return orderRepository.findAll().stream().map(orderEntity -> new OrderCsvLineDto(
+                        orderEntity.getUuid().toString(),
+                        orderEntity.getPriority().getName(),
+                        orderEntity.getDate().toString(),
+                        orderEntity.getCountry().getRegion().getName(),
+                        orderEntity.getCountry().getName(),
+                        orderEntity.getItemType().getName(),
+                        orderEntity.getSalesChannel().getName(),
+                        orderEntity.getShipDate().toString(),
+                        orderEntity.getUnitsSold(),
+                        orderEntity.getUnitPrice(),
+                        orderEntity.getUnitCost(),
+                        orderEntity.getTotalRevenue(),
+                        orderEntity.getTotalCost(),
+                        orderEntity.getTotalProfit()
+                ))
+                .toList();
     }
 
     @Override
