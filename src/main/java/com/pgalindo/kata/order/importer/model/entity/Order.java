@@ -14,6 +14,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "original_order_id", nullable = false)
+    private Integer originalOrderId;
+
     @Column(name = "uuid", nullable = false)
     private UUID uuid;
 
@@ -61,6 +64,7 @@ public class Order {
     }
 
     public Order(UUID uuid,
+                 Integer originalOrderId,
                  Country country,
                  ItemType itemType,
                  SalesChannel salesChannel,
@@ -74,6 +78,7 @@ public class Order {
                  BigDecimal totalCost,
                  BigDecimal totalProfit) {
         this.uuid = uuid;
+        this.originalOrderId = originalOrderId;
         this.country = country;
         this.itemType = itemType;
         this.salesChannel = salesChannel;
@@ -90,6 +95,14 @@ public class Order {
 
     public Integer getId() {
         return id;
+    }
+
+    public Integer getOriginalOrderId() {
+        return originalOrderId;
+    }
+
+    public void setOriginalOrderId(Integer originalOrderId) {
+        this.originalOrderId = originalOrderId;
     }
 
     public UUID getUuid() {

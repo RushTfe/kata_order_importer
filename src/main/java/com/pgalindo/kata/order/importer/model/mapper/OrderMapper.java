@@ -13,6 +13,7 @@ public interface OrderMapper {
     @Mapping(source = "salesChannel", target = "salesChannel")
     @Mapping(source = "itemType", target = "itemType")
     @Mapping(source = "country", target = "country")
+    @Mapping(source = "orderInput.id", target = "originalOrderId")
     Order orderInputToOrder(OrderInput orderInput,
                             Priority priority,
                             SalesChannel salesChannel,
