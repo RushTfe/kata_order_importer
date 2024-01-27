@@ -6,10 +6,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Modifying
     @Query(value = "DELETE FROM Order")
     void deleteOrders();
+
+    List<Order> findAllByOrderByOriginalOrderIdAsc();
 }

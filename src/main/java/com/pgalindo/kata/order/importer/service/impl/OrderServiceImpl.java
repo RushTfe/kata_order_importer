@@ -48,8 +48,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderCsvLineDto> findAllForCsv() {
-        return orderRepository.findAll().stream().map(orderEntity -> new OrderCsvLineDto(
-                        orderEntity.getUuid().toString(),
+        return orderRepository.findAllByOrderByOriginalOrderIdAsc().stream().map(orderEntity -> new OrderCsvLineDto(
+                        orderEntity.getOriginalOrderId().toString(),
                         orderEntity.getPriority().getName(),
                         orderEntity.getDate().toString(),
                         orderEntity.getCountry().getRegion().getName(),
