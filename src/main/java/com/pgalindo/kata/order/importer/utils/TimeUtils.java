@@ -1,8 +1,11 @@
 package com.pgalindo.kata.order.importer.utils;
 
+import lombok.experimental.UtilityClass;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+@UtilityClass
 public class TimeUtils {
 
     private static final String CSV_FORMAT = "dd/mm/yyyy";

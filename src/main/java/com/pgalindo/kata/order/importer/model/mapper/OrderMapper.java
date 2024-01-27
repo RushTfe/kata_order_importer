@@ -14,6 +14,7 @@ public interface OrderMapper {
     @Mapping(source = "itemType", target = "itemType")
     @Mapping(source = "country", target = "country")
     @Mapping(source = "orderInput.id", target = "originalOrderId")
+    @Mapping(ignore = true, target = "id")
     Order orderInputToOrder(OrderInput orderInput,
                             Priority priority,
                             SalesChannel salesChannel,

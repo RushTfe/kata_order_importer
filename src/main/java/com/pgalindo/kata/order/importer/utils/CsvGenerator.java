@@ -12,11 +12,11 @@ public class CsvGenerator {
     private final List<String> encabezados;
     private final CSVPrinter csvPrinter;
 
-    public CsvGenerator(PrintWriter writer, List<String> encabezados) throws IOException {
-        this.encabezados = encabezados;
+    public CsvGenerator(PrintWriter writer, List<String> headers) throws IOException {
+        this.encabezados = headers;
         csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT);
 
-        csvPrinter.printRecord(encabezados);
+        csvPrinter.printRecord(headers);
     }
 
     public void generateCsvLine(List<String> line) throws IOException {
