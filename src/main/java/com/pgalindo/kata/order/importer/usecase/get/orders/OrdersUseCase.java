@@ -3,7 +3,7 @@ package com.pgalindo.kata.order.importer.usecase.get.orders;
 import com.pgalindo.kata.order.importer.model.entity.SummaryProjection;
 import com.pgalindo.kata.order.importer.model.mapper.OrderMapper;
 import com.pgalindo.kata.order.importer.service.OrderService;
-import com.pgalindo.kata.order.importer.usecase.get.orders.response.OrderSummaryFieldResponse;
+import com.pgalindo.kata.order.importer.usecase.get.orders.response.OrderSummaryFieldModel;
 import com.pgalindo.kata.order.importer.usecase.get.orders.response.SummariesModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,15 +19,15 @@ public class OrdersUseCase {
 
     public SummariesModel generateSummaries() {
 
-        List<OrderSummaryFieldResponse> regionSummaries = generateSummaries(orderService.findRegionSummaries());
+        List<OrderSummaryFieldModel> regionSummaries = generateSummaries(orderService.findRegionSummaries());
 
-        List<OrderSummaryFieldResponse> countrySummaries = generateSummaries(orderService.findCountrySummaries());
+        List<OrderSummaryFieldModel> countrySummaries = generateSummaries(orderService.findCountrySummaries());
 
-        List<OrderSummaryFieldResponse> itemTypes = generateSummaries(orderService.findItemtypeSummaries());
+        List<OrderSummaryFieldModel> itemTypes = generateSummaries(orderService.findItemtypeSummaries());
 
-        List<OrderSummaryFieldResponse> salesChannels = generateSummaries(orderService.findSalesChannelSummaries());
+        List<OrderSummaryFieldModel> salesChannels = generateSummaries(orderService.findSalesChannelSummaries());
 
-        List<OrderSummaryFieldResponse> priorities = generateSummaries(orderService.findPrioritySummaries());
+        List<OrderSummaryFieldModel> priorities = generateSummaries(orderService.findPrioritySummaries());
 
         return new SummariesModel(regionSummaries, countrySummaries, itemTypes, salesChannels, priorities);
     }
@@ -41,7 +41,7 @@ public class OrdersUseCase {
     }
 
 
-    private List<OrderSummaryFieldResponse> generateSummaries(List<SummaryProjection> projections) {
+    private List<OrderSummaryFieldModel> generateSummaries(List<SummaryProjection> projections) {
         return projections
                 .stream()
                 .map(orderMapper::projectionToOrderSummaryFieldResponse)

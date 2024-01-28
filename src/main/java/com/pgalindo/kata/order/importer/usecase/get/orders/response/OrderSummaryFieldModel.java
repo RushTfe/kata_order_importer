@@ -1,8 +1,6 @@
 package com.pgalindo.kata.order.importer.usecase.get.orders.response;
 
-import java.math.BigDecimal;
-
-public record OrderSummaryFieldResponse(
+public record OrderSummaryFieldModel(
         String count,
         String totalCost,
         String totalProfit,

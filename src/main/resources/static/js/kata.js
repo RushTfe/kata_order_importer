@@ -39,6 +39,5 @@ const showToast = (headerText, bodyText) => {
 
     header.textContent = headerText;
     body.textContent = bodyText;
-    location.reload();
     toast.classList.add("show");
 }

@@ -3,6 +3,7 @@ package com.pgalindo.kata.order.importer.service.impl;
 import com.pgalindo.kata.order.importer.model.entity.AbstractJobEntity;
 import com.pgalindo.kata.order.importer.model.entity.ImportJobEntity;
 import com.pgalindo.kata.order.importer.model.enums.JobStatus;
+import com.pgalindo.kata.order.importer.repository.ImportJobRepository;
 import com.pgalindo.kata.order.importer.repository.JobRepository;
 import com.pgalindo.kata.order.importer.service.JobService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,6 +21,7 @@ public class JobServiceImpl implements JobService {
     private static final Logger logger = LoggerFactory.getLogger(JobServiceImpl.class);
 
     private final JobRepository jobRepository;
+    private final ImportJobRepository importJobRepository;
 
     @Override
     public Optional<ImportJobEntity> findFirstWaiting() {
@@ -37,5 +40,11 @@ public class JobServiceImpl implements JobService {
         logger.info("Updating job status to {}", status);
         job.setStatus(status);
         job.setUpdatedAt(LocalDateTime.now());
+        jobRepository.save(job);
+    }
+
+    @Override
+    public List<ImportJobEntity> findAllImports() {
+        return importJobRepository.findAll();
     }
 }

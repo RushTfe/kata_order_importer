@@ -2,7 +2,7 @@ package com.pgalindo.kata.order.importer.model.mapper;
 
 import com.pgalindo.kata.order.importer.model.entity.*;
 import com.pgalindo.kata.order.importer.model.service.OrderInput;
-import com.pgalindo.kata.order.importer.usecase.get.orders.response.OrderSummaryFieldResponse;
+import com.pgalindo.kata.order.importer.usecase.get.orders.response.OrderSummaryFieldModel;
 import com.pgalindo.kata.order.importer.utils.NumberUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -27,7 +27,7 @@ public interface OrderMapper {
     @Mapping(expression = "java(this.bigDecimalToString(projection.getTotalCost()))", target = "totalCost")
     @Mapping(expression = "java(this.bigDecimalToString(projection.getTotalProfit()))", target = "totalProfit")
     @Mapping(expression = "java(this.integerToString(projection.getTotalCount()))", target = "count")
-    OrderSummaryFieldResponse projectionToOrderSummaryFieldResponse(SummaryProjection projection);
+    OrderSummaryFieldModel projectionToOrderSummaryFieldResponse(SummaryProjection projection);
 
     default String bigDecimalToString(BigDecimal number) {
         return NumberUtils.bigDecimalToUiString(number);
