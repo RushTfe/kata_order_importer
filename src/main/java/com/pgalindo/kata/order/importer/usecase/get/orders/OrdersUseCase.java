@@ -1,5 +1,6 @@
 package com.pgalindo.kata.order.importer.usecase.get.orders;
 
+import com.pgalindo.kata.order.importer.model.entity.SummaryProjection;
 import com.pgalindo.kata.order.importer.model.mapper.OrderMapper;
 import com.pgalindo.kata.order.importer.service.OrderService;
 import com.pgalindo.kata.order.importer.usecase.get.orders.response.OrderSummaryFieldResponse;
@@ -18,11 +19,23 @@ public class OrdersUseCase {
 
     public OrdersResponse getOrders() {
 
-        List<OrderSummaryFieldResponse> countrySummaries = orderService.findCountrySummaries()
+        List<OrderSummaryFieldResponse> regionSummaries = getSummaries(orderService.findRegionSummaries());
+
+        List<OrderSummaryFieldResponse> countrySummaries = getSummaries(orderService.findCountrySummaries());
+
+        List<OrderSummaryFieldResponse> itemTypes = getSummaries(orderService.findItemtypeSummaries());
+
+        List<OrderSummaryFieldResponse> salesChannels = getSummaries(orderService.findSalesChannelSummaries());
+
+        List<OrderSummaryFieldResponse> priorities = getSummaries(orderService.findPrioritySummaries());
+
+        return new OrdersResponse(regionSummaries, countrySummaries, itemTypes, salesChannels, priorities);
+    }
+
+    private List<OrderSummaryFieldResponse> getSummaries(List<SummaryProjection> projections) {
+        return projections
                 .stream()
                 .map(orderMapper::projectionToOrderSummaryFieldResponse)
                 .toList();
-
-        return new OrdersResponse(null, countrySummaries, null, null, null);
     }
 }

@@ -73,6 +73,26 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<SummaryProjection> findRegionSummaries() {
+        return orderRepository.findRegionSummaries();
+    }
+
+    @Override
+    public List<SummaryProjection> findItemtypeSummaries() {
+        return orderRepository.findItemTypeSummaries();
+    }
+
+    @Override
+    public List<SummaryProjection> findSalesChannelSummaries() {
+        return orderRepository.findSalesChannelSummaries();
+    }
+
+    @Override
+    public List<SummaryProjection> findPrioritySummaries() {
+        return orderRepository.findPrioritySummaries();
+    }
+
+    @Override
     public void saveAll(List<OrderInput> orderInputs, RelationCacheHelper cacheHelper) {
 
         logger.info("Started order importing service. a total of {} orders will be saved.", orderInputs.size());

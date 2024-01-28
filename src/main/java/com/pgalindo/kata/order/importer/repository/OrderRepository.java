@@ -18,22 +18,89 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query(value = """
             SELECT
-                count(o.id) as totalCount,
-                sum(o.total_cost) as totalCost,
-                sum(o.total_profit) as totalProfit,
+                COUNT(o.id) as totalCount,
+                SUM(o.totalCost) as totalCost,
+                SUM(o.totalProfit) as totalProfit,
                 c.name as name
             FROM
-                `order` o
+                Order o
             JOIN
-                country c
-            ON
-                o.country_id = c.id
+                o.country c
             GROUP BY
                 c.id
             ORDER BY
                 c.name
-            """,
-    nativeQuery = true)
+            """)
     List<SummaryProjection> findCountrySummaries();
+
+    @Query(value = """
+            SELECT
+                COUNT(o.id) as totalCount,
+                SUM(o.totalCost) as totalCost,
+                SUM(o.totalProfit) as totalProfit,
+                r.name as name
+            FROM
+                Order o
+            JOIN
+                o.country c
+            JOIN
+                c.region r
+            GROUP BY
+                r.id
+            ORDER BY
+                r.name
+            """)
+    List<SummaryProjection> findRegionSummaries();
+
+    @Query(value = """
+            SELECT
+                COUNT(o.id) as totalCount,
+                SUM(o.totalCost) as totalCost,
+                SUM(o.totalProfit) as totalProfit,
+                it.name as name
+            FROM
+                Order o
+            JOIN
+                o.itemType it
+            GROUP BY
+                it.id
+            ORDER BY
+                it.name
+            """)
+    List<SummaryProjection> findItemTypeSummaries();
+
+    @Query(value = """
+            SELECT
+                COUNT(o.id) as totalCount,
+                SUM(o.totalCost) as totalCost,
+                SUM(o.totalProfit) as totalProfit,
+                sc.name as name
+            FROM
+                Order o
+            JOIN
+                o.salesChannel sc
+            GROUP BY
+                sc.id
+            ORDER BY
+                sc.name
+            """)
+    List<SummaryProjection> findSalesChannelSummaries();
+
+    @Query(value = """
+            SELECT
+                COUNT(o.id) as totalCount,
+                SUM(o.totalCost) as totalCost,
+                SUM(o.totalProfit) as totalProfit,
+                p.name as name
+            FROM
+                Order o
+            JOIN
+                o.priority p
+            GROUP BY
+                p.id
+            ORDER BY
+                p.name
+            """)
+    List<SummaryProjection> findPrioritySummaries();
     List<Order> findAllByOrderByOriginalOrderIdAsc();
 }

@@ -12,6 +12,14 @@ public interface OrderService {
 
     List<SummaryProjection> findCountrySummaries();
 
+    List<SummaryProjection> findRegionSummaries();
+
+    List<SummaryProjection> findItemtypeSummaries();
+
+    List<SummaryProjection> findSalesChannelSummaries();
+
+    List<SummaryProjection> findPrioritySummaries();
+
     void saveAll(List<OrderInput> orders, RelationCacheHelper cacheHelper);
     void removeOrders();
 }
