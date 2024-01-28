@@ -1,5 +1,6 @@
 package com.pgalindo.kata.order.importer.usecase.get.orders;
 
+import com.pgalindo.kata.order.importer.usecase.get.orders.response.OrdersResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +19,9 @@ public class OrdersController {
     @GetMapping("/api/koi/orders")
     String getOrders(Model model) {
 
-        model.addAttribute("isDownloadAvailable", false);
+        OrdersResponse summaries = ordersUseCase.getOrders();
+
+        model.addAttribute("summaries", summaries);
 
         return "orders";
 

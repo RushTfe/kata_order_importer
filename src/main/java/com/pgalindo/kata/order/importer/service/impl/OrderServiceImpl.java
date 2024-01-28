@@ -68,6 +68,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<SummaryProjection> findCountrySummaries() {
+        return orderRepository.findCountrySummaries();
+    }
+
+    @Override
     public void saveAll(List<OrderInput> orderInputs, RelationCacheHelper cacheHelper) {
 
         logger.info("Started order importing service. a total of {} orders will be saved.", orderInputs.size());

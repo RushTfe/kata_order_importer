@@ -7,7 +7,7 @@
 
 .navbar-brand {
     width: 100%;
-    text-align: center; /* Centrar el texto */
+    text-align: center;
 }
 
 /* Estilos para el cajón de navegación */
@@ -21,7 +21,7 @@
     padding-top: 20px;
     padding-right: 10px;
     z-index: 999;
-    margin-top: 56px; /* Altura de la barra superior */
+    margin-top: 56px;
 }
 
 
@@ -29,26 +29,26 @@
     padding: 8px;
     text-decoration: none;
     font-size: 18px;
-    color: #343a40; /* Color de texto Bootstrap Dark */
+    color: #343a40;
 }
 
 .sidebar a:hover {
-    background-color: #007bff; /* Color de fondo Bootstrap Primary al hacer hover */
+    background-color: #007bff;
     color: white;
 }
 
 /* Estilos para la sección central */
 .content {
-    margin-left: 200px; /* Ancho del cajón de navegación + espacio de margen */
+    margin-left: 200px;
     padding: 20px;
 }
 
 /* Ajuste adicional para evitar superposición en pantallas pequeñas */
 @media (max-width: 768px) {
     .sidebar {
-        margin-top: 0; /* Restablecer el margen en pantallas pequeñas */
+        margin-top: 0;
     }
     .content {
-        margin-left: 0; /* Restablecer el margen en pantallas pequeñas */
+        margin-left: 0;
     }
 }
