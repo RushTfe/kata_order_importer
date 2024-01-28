@@ -18,7 +18,7 @@ public class ClearDatabaseController {
     @DeleteMapping("/api/koi/orders/clearDatabase")
     public ResponseEntity<String> clearDatabase() {
 
-        clearDatabaseUseCase.clearDatabase();
+        clearDatabaseUseCase.clearDatabaseProcess();
 
         return ResponseEntity.ok().body("Orders imported");
     }
