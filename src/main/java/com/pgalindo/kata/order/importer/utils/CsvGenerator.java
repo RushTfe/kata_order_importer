@@ -9,11 +9,11 @@ import java.util.List;
 
 public class CsvGenerator {
 
-    private final List<String> encabezados;
+    private final List<String> headers;
     private final CSVPrinter csvPrinter;
 
     public CsvGenerator(PrintWriter writer, List<String> headers) throws IOException {
-        this.encabezados = headers;
+        this.headers = headers;
         csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT);
 
         csvPrinter.printRecord(headers);
@@ -32,10 +32,10 @@ public class CsvGenerator {
     }
 
     private void validateLine(List<String> line) {
-        if (line.size() != encabezados.size()) {
+        if (line.size() != headers.size()) {
             String message = String.format(
                     "Line provided should have the same amount of items than header (Header -> %d, Line -> %d).",
-                    encabezados.size(), line.size()
+                    headers.size(), line.size()
             );
             throw new RuntimeException(message);
         }
