@@ -34,19 +34,9 @@
         <div class="sidebar">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <button type="button" class="nav-link" onclick="postKata('/api/koi/orders/importOrders')">
-                        <i class="fa-solid fa-cloud-arrow-down"></i> Import orders
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button type="button" class="nav-link" onclick="deleteKata('/api/koi/orders/clearDatabase')">
-                        <i class="fa-solid fa-trash"></i> Clear database
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button type="button" class="nav-link" onclick="downloadCsv('/api/koi/orders/download')">
-                        <i class="fas fa-download"></i> Download CSV
-                    </button>
+                    <a class="nav-link" th:href="@{/api/koi/orders}">
+                        <i class="fa-solid fa-house"></i> Main page
+                    </a>
                 </li>
             </ul>
         </div>
@@ -66,7 +56,35 @@
                 </div>
             </div>
 
-            <h2>Resúmenes</h2>
+            <div class="button-container my-3">
+                <div class="left-buttons">
+                    <button type="button" class="btn btn-primary" th:if="${canImportOrders}" onclick="postKata('/api/koi/orders/importOrders')">
+                        <i class="fa-solid fa-cloud-arrow-down"></i> Import orders
+                    </button>
+                    <button type="button" class="btn btn-primary disabled" th:unless="${canImportOrders}">
+                        <i class="fa-solid fa-cloud-arrow-down"></i> Import orders
+                    </button>
+
+                    <button type="button" class="btn btn-success" th:if="${canClearDatabase}" onclick="downloadCsv('/api/koi/orders/download')">
+                        <i class="fas fa-download"></i> Download CSV
+                    </button>
+                    <button type="button" class="btn btn-success disabled" th:unless="${canClearDatabase}">
+                        <i class="fas fa-download"></i> Download CSV
+                    </button>
+                </div>
+
+                <button type="button" class="btn btn-danger" th:if="${canClearDatabase}" onclick="deleteKata('/api/koi/orders/clearDatabase')">
+                    <i class="fa-solid fa-trash"></i> Clear database
+                </button>
+                <button type="button" class="btn btn-danger disabled" th:unless="${canClearDatabase}">
+                    <i class="fa-solid fa-trash"></i> Clear database
+                </button>
+
+            </div>
+
+
+
+            <h2>Summaries</h2>
 
             <div class="accordion" id="accordionExample">
                 <div class="accordion-item">

@@ -16,6 +16,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query(value = "DELETE FROM Order")
     void deleteOrders();
 
+    List<Order> findAllByOrderByOriginalOrderIdAsc();
+
     @Query(value = """
             SELECT
                 COUNT(o.id) as totalCount,
@@ -102,5 +104,4 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
                 p.name
             """)
     List<SummaryProjection> findPrioritySummaries();
-    List<Order> findAllByOrderByOriginalOrderIdAsc();
 }

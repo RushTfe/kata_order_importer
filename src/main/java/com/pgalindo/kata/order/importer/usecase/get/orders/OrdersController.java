@@ -1,6 +1,6 @@
 package com.pgalindo.kata.order.importer.usecase.get.orders;
 
-import com.pgalindo.kata.order.importer.usecase.get.orders.response.OrdersResponse;
+import com.pgalindo.kata.order.importer.usecase.get.orders.response.SummariesModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +19,11 @@ public class OrdersController {
     @GetMapping("/api/koi/orders")
     String getOrders(Model model) {
 
-        OrdersResponse summaries = ordersUseCase.getOrders();
+        SummariesModel summaries = ordersUseCase.generateSummaries();
 
         model.addAttribute("summaries", summaries);
+        model.addAttribute("canImportOrders", ordersUseCase.canImportOrders());
+        model.addAttribute("canClearDatabase", ordersUseCase.canClearDatabase());
 
         return "orders";
 

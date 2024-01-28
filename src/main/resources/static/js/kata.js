@@ -14,7 +14,7 @@ const deleteKata = (url) => {
         headers:{"Content-type": "application/json; charset=UTF-8"}
     })
     .then(response => response.json)
-    .then(json => console.log(json))
+    .then(json => showToast('Success', 'Database will be cleared shortly, please wait patiently.'))
     .catch(err => console.log(err))
 }
 
@@ -39,5 +39,6 @@ const showToast = (headerText, bodyText) => {
 
     header.textContent = headerText;
     body.textContent = bodyText;
+    location.reload();
     toast.classList.add("show");
 }

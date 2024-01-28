@@ -20,6 +20,8 @@ public interface OrderService {
 
     List<SummaryProjection> findPrioritySummaries();
 
+    Long countAllOrders();
+
     void saveAll(List<OrderInput> orders, RelationCacheHelper cacheHelper);
     void removeOrders();
 }

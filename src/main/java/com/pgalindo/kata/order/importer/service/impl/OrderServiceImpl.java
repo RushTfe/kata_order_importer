@@ -93,6 +93,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Long countAllOrders() {
+        return orderRepository.count();
+    }
+
+    @Override
     @Transactional
     public void saveAll(List<OrderInput> orderInputs, RelationCacheHelper cacheHelper) {
 

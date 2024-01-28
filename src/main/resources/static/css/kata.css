@@ -70,6 +70,16 @@
     max-width: 300px;
 }
 
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-buttons {
+    display: flex;
+    gap: 10px;
+}
+
 /* Ajuste adicional para evitar superposición en pantallas pequeñas */
 @media (max-width: 768px) {
     .sidebar {
