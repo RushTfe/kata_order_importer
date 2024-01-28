@@ -1,9 +1,11 @@
 package com.pgalindo.kata.order.importer.jobs;
 
+import com.pgalindo.kata.order.importer.model.entity.AbstractJobEntity;
 import com.pgalindo.kata.order.importer.model.entity.ImportJobEntity;
 import com.pgalindo.kata.order.importer.model.enums.JobStatus;
 import com.pgalindo.kata.order.importer.service.JobService;
 import com.pgalindo.kata.order.importer.usecase.job.ImportOrdersJobUseCase;
+import com.pgalindo.kata.order.importer.visitor.JobVisitor;
 import lombok.RequiredArgsConstructor;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -17,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class OrderImporterJob implements Job {
     private static final Logger logger = LoggerFactory.getLogger(OrderImporterJob.class);
 
-    private final ImportOrdersJobUseCase importOrdersJobUseCase;
+    private final JobVisitor jobVisitor;
     private final JobService jobService;
 
     @Override
@@ -30,12 +32,14 @@ public class OrderImporterJob implements Job {
         logger.info("Executed Order import job.");
     }
 
-    private void manageJob(ImportJobEntity job) {
+    private void manageJob(AbstractJobEntity job) {
         try {
             logger.info("Found a candidate for importing orders");
             jobService.updateStatus(job, JobStatus.IN_PROCESS);
             jobService.createJob(job);
-            importOrdersJobUseCase.importOrders();
+
+            job.accept(jobVisitor);
+
             jobService.updateStatus(job, JobStatus.FINISHED);
         } catch (Exception e) {
             logger.error("An exception occured while trying to process an import", e);

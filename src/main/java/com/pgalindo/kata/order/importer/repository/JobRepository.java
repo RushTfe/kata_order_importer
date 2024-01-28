@@ -9,5 +9,5 @@ import java.util.Optional;
 
 public interface JobRepository extends JpaRepository<AbstractJobEntity, Long> {
 
-    Optional<ImportJobEntity> findFirstByStatusOrderByCreatedAtAsc(JobStatus status);
+    Optional<AbstractJobEntity> findFirstByStatusOrderByCreatedAtAsc(JobStatus status);
 }

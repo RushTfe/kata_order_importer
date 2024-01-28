@@ -1,6 +1,7 @@
 package com.pgalindo.kata.order.importer.model.entity;
 
 import com.pgalindo.kata.order.importer.model.enums.JobStatus;
+import com.pgalindo.kata.order.importer.visitor.JobVisitor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,4 +32,6 @@ public abstract class AbstractJobEntity {
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+
+    public abstract void accept(JobVisitor visitor);
 }

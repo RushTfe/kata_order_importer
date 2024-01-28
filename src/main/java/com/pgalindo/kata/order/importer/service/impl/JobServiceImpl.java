@@ -27,7 +27,7 @@ public class JobServiceImpl implements JobService {
     private final ClearDatabaseJobRepository clearDatabaseJobRepository;
 
     @Override
-    public Optional<ImportJobEntity> findFirstWaiting() {
+    public Optional<AbstractJobEntity> findFirstWaiting() {
         return jobRepository.findFirstByStatusOrderByCreatedAtAsc(JobStatus.WAITING);
     }
 
@@ -48,11 +48,11 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public List<ImportJobEntity> findAllImports() {
-        return importJobRepository.findAll();
+        return importJobRepository.findAllByOrderByCreatedAtDesc();
     }
 
     @Override
     public List<ClearDatabaseJobEntity> findAllClearDatabase() {
-        return clearDatabaseJobRepository.findAll();
+        return clearDatabaseJobRepository.findAllByOrderByCreatedAtDesc();
     }
 }

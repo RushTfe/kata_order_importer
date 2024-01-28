@@ -1,5 +1,6 @@
 package com.pgalindo.kata.order.importer.model.entity;
 
+import com.pgalindo.kata.order.importer.visitor.JobVisitor;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -14,4 +15,8 @@ import lombok.Setter;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class ClearDatabaseJobEntity extends AbstractJobEntity {
 
+    @Override
+    public void accept(JobVisitor visitor) {
+        visitor.visit(this);
+    }
 }

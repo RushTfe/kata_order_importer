@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface JobService {
-    Optional<ImportJobEntity> findFirstWaiting();
+    Optional<AbstractJobEntity> findFirstWaiting();
     void createJob(AbstractJobEntity job);
     void updateStatus(AbstractJobEntity job, JobStatus status);
     List<ImportJobEntity> findAllImports();
