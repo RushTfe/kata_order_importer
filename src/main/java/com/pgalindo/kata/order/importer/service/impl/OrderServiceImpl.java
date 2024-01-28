@@ -9,14 +9,15 @@ import com.pgalindo.kata.order.importer.repository.OrderRepository;
 import com.pgalindo.kata.order.importer.service.*;
 import com.pgalindo.kata.order.importer.utils.TimeUtils;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
@@ -28,23 +29,6 @@ public class OrderServiceImpl implements OrderService {
     private final ItemTypeService itemTypeService;
     private final RegionService regionService;
     private final CountryService countryService;
-
-    @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository,
-                            OrderMapper orderMapper,
-                            PriorityService priorityService,
-                            SalesChannelService salesChannelService,
-                            ItemTypeService itemTypeService,
-                            RegionService regionService,
-                            CountryService countryService) {
-        this.orderRepository = orderRepository;
-        this.orderMapper = orderMapper;
-        this.priorityService = priorityService;
-        this.salesChannelService = salesChannelService;
-        this.itemTypeService = itemTypeService;
-        this.regionService = regionService;
-        this.countryService = countryService;
-    }
 
     @Override
     public List<OrderCsvLineDto> findAllForCsv() {

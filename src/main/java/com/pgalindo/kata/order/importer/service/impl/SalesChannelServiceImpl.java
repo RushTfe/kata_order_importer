@@ -3,20 +3,16 @@ package com.pgalindo.kata.order.importer.service.impl;
 import com.pgalindo.kata.order.importer.model.entity.SalesChannel;
 import com.pgalindo.kata.order.importer.repository.SalesChannelRepository;
 import com.pgalindo.kata.order.importer.service.SalesChannelService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class SalesChannelServiceImpl implements SalesChannelService {
 
     private final SalesChannelRepository salesChannelRepository;
-
-    @Autowired
-    public SalesChannelServiceImpl(SalesChannelRepository salesChannelRepository) {
-        this.salesChannelRepository = salesChannelRepository;
-    }
 
     @Override
     public SalesChannel findSalesChannelOrCreate(String salesChannelName) {

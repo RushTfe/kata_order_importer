@@ -4,9 +4,9 @@ import com.pgalindo.kata.order.importer.model.OrderCsvLineDto;
 import com.pgalindo.kata.order.importer.service.OrderService;
 import com.pgalindo.kata.order.importer.utils.CsvGenerator;
 import com.pgalindo.kata.order.importer.utils.TimeUtils;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -15,16 +15,10 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class OrdersDownloadCsvUseCase {
-
     private static final Logger logger = LoggerFactory.getLogger(OrdersDownloadCsvUseCase.class);
-
     private final OrderService orderService;
-
-    @Autowired
-    public OrdersDownloadCsvUseCase(OrderService orderService) {
-        this.orderService = orderService;
-    }
 
     public void generateCsv(PrintWriter writer) {
         logger.info("Started use case for downloading CSV file.");

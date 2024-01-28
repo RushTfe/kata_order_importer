@@ -8,9 +8,9 @@ import com.pgalindo.kata.order.importer.model.service.OrderInput;
 import com.pgalindo.kata.order.importer.service.OrderService;
 import com.pgalindo.kata.order.importer.utils.TimeUtils;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -45,6 +45,7 @@ import java.util.Objects;
  * </ol>
  */
 @Component
+@RequiredArgsConstructor
 public class ImportOrdersJobUseCase {
 
     private static final Logger logger = LoggerFactory.getLogger(ImportOrdersJobUseCase.class);
@@ -52,27 +53,14 @@ public class ImportOrdersJobUseCase {
     private final ClientMapper clientMapper;
     private final EspublicoClient espublicoClient;
     private final OrderService orderService;
-    private final Integer maxOrdersPerPage;
-    private final Integer pageBuffer;
-    private final Integer pagesToImport;
-    private final boolean importAll;
-
-    @Autowired
-    public ImportOrdersJobUseCase(ClientMapper clientMapper,
-                                  EspublicoClient espublicoClient,
-                                  OrderService orderService,
-                                  @Value("${koi.client.request.maxOrdersPerPage}") Integer maxOrdersPerPage,
-                                  @Value("${koi.client.request.page-buffer}") Integer pageBuffer,
-                                  @Value("${koi.client.request.pages-to-import}") Integer pagesToImport,
-                                  @Value("${koi.client.request.import-all}") boolean importAll) {
-        this.clientMapper = clientMapper;
-        this.espublicoClient = espublicoClient;
-        this.orderService = orderService;
-        this.maxOrdersPerPage = maxOrdersPerPage;
-        this.pageBuffer = pageBuffer;
-        this.pagesToImport = pagesToImport;
-        this.importAll = importAll;
-    }
+    @Value("${koi.client.request.maxOrdersPerPage}")
+    private Integer maxOrdersPerPage;
+    @Value("${koi.client.request.page-buffer}")
+    private Integer pageBuffer;
+    @Value("${koi.client.request.pages-to-import}")
+    private Integer pagesToImport;
+    @Value("${koi.client.request.import-all}")
+    private boolean importAll;
 
     /**
      * Calls Espublico API to populate a buffer, that will be sent to a service in charge of storing them in Database.
