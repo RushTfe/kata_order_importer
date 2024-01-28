@@ -20,6 +20,11 @@ public class JobsUseCase {
                 .map(job -> new JobFieldModel(job.getStatus().name(), job.getCreatedAt().toString(), job.getUpdatedAt().toString()))
                 .toList();
 
-        return new JobsModel(allImportJobs);
+        List<JobFieldModel> allClearDatabase = jobService.findAllClearDatabase()
+                .stream()
+                .map(job -> new JobFieldModel(job.getStatus().name(), job.getCreatedAt().toString(), job.getUpdatedAt().toString()))
+                .toList();
+
+        return new JobsModel(allImportJobs, allClearDatabase);
     }
 }

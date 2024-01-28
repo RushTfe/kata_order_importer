@@ -52,24 +52,51 @@
             <div class="container mt-4">
                 <table class="table table-bordered table-hover">
                     <thead>
-                        <tr>
-                            <th class="text-center">Status</th>
-                            <th class="text-center">Created date</th>
-                            <th class="text-center">Updated date</th>
-                            <th class="text-center">Action</th>
-                        </tr>
+                    <tr>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Created date</th>
+                        <th class="text-center">Updated date</th>
+                        <th class="text-center">Action</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="job: ${jobs.imports}">
-                            <td class="text-center" th:text="${job.status}"></td>
-                            <td class="text-center" th:text="${job.createdAt}"></td>
-                            <td class="text-center" th:text="${job.updatedAt}"></td>
-                            <td class="text-center">
-                                <button class="btn btn-warning btn-sm">
-                                    <i class="fa fa-refresh" aria-hidden="true"></i> Restart
-                                </button>
-                            </td>
-                        </tr>
+                    <tr th:each="job: ${jobs.imports}">
+                        <td class="text-center" th:text="${job.status}"></td>
+                        <td class="text-center" th:text="${job.createdAt}"></td>
+                        <td class="text-center" th:text="${job.updatedAt}"></td>
+                        <td class="text-center">
+                            <button class="btn btn-warning btn-sm">
+                                <i class="fa fa-refresh" aria-hidden="true"></i> Restart
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 class="mt-5">Clear database jobs</h2>
+
+            <div class="container mt-4">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Created date</th>
+                        <th class="text-center">Updated date</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="job: ${jobs.clearDatabase}">
+                        <td class="text-center" th:text="${job.status}"></td>
+                        <td class="text-center" th:text="${job.createdAt}"></td>
+                        <td class="text-center" th:text="${job.updatedAt}"></td>
+                        <td class="text-center">
+                            <button class="btn btn-warning btn-sm">
+                                <i class="fa fa-refresh" aria-hidden="true"></i> Restart
+                            </button>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>

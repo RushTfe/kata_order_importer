@@ -1,8 +1,10 @@
 package com.pgalindo.kata.order.importer.service.impl;
 
 import com.pgalindo.kata.order.importer.model.entity.AbstractJobEntity;
+import com.pgalindo.kata.order.importer.model.entity.ClearDatabaseJobEntity;
 import com.pgalindo.kata.order.importer.model.entity.ImportJobEntity;
 import com.pgalindo.kata.order.importer.model.enums.JobStatus;
+import com.pgalindo.kata.order.importer.repository.ClearDatabaseJobRepository;
 import com.pgalindo.kata.order.importer.repository.ImportJobRepository;
 import com.pgalindo.kata.order.importer.repository.JobRepository;
 import com.pgalindo.kata.order.importer.service.JobService;
@@ -22,6 +24,7 @@ public class JobServiceImpl implements JobService {
 
     private final JobRepository jobRepository;
     private final ImportJobRepository importJobRepository;
+    private final ClearDatabaseJobRepository clearDatabaseJobRepository;
 
     @Override
     public Optional<ImportJobEntity> findFirstWaiting() {
@@ -46,5 +49,10 @@ public class JobServiceImpl implements JobService {
     @Override
     public List<ImportJobEntity> findAllImports() {
         return importJobRepository.findAll();
+    }
+
+    @Override
+    public List<ClearDatabaseJobEntity> findAllClearDatabase() {
+        return clearDatabaseJobRepository.findAll();
     }
 }

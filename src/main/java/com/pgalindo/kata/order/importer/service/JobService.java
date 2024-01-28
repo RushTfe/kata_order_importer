@@ -1,6 +1,7 @@
 package com.pgalindo.kata.order.importer.service;
 
 import com.pgalindo.kata.order.importer.model.entity.AbstractJobEntity;
+import com.pgalindo.kata.order.importer.model.entity.ClearDatabaseJobEntity;
 import com.pgalindo.kata.order.importer.model.entity.ImportJobEntity;
 import com.pgalindo.kata.order.importer.model.enums.JobStatus;
 
@@ -12,4 +13,5 @@ public interface JobService {
     void createJob(AbstractJobEntity job);
     void updateStatus(AbstractJobEntity job, JobStatus status);
     List<ImportJobEntity> findAllImports();
+    List<ClearDatabaseJobEntity> findAllClearDatabase();
 }
