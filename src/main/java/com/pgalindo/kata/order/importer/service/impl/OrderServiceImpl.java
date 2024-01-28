@@ -93,6 +93,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public void saveAll(List<OrderInput> orderInputs, RelationCacheHelper cacheHelper) {
 
         logger.info("Started order importing service. a total of {} orders will be saved.", orderInputs.size());

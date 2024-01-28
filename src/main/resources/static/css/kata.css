@@ -2,7 +2,6 @@
 .navbar {
     position: fixed;
     width: 100%;
-    z-index: 1000;
 }
 
 .navbar-brand {
@@ -20,7 +19,6 @@
     background-color: #f8f9fa;
     padding-top: 20px;
     padding-right: 10px;
-    z-index: 999;
     margin-top: 56px;
 }
 
@@ -37,10 +35,39 @@
     color: white;
 }
 
+
+.sidebar button {
+    padding: 8px;
+    width: 100%;
+    text-decoration: none;
+    font-size: 18px;
+    color: #343a40;
+}
+
+.sidebar button:hover {
+    background-color: #007bff;
+    width: 100%;
+    color: white;
+}
+
 /* Estilos para la sección central */
 .content {
     margin-left: 200px;
     padding: 20px;
+}
+
+/* Personaliza el estilo del Toast */
+.toast-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 9999;
+}
+.toast {
+    position: relative;
+    background-color: #343a40; /* Color de fondo del Toast */
+    color: #ffffff; /* Color del texto del Toast */
+    max-width: 300px;
 }
 
 /* Ajuste adicional para evitar superposición en pantallas pequeñas */

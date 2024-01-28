@@ -2,7 +2,6 @@ package com.pgalindo.kata.order.importer.usecase.get.download;
 
 import com.pgalindo.kata.order.importer.model.OrderCsvLineDto;
 import com.pgalindo.kata.order.importer.service.OrderService;
-import com.pgalindo.kata.order.importer.usecase.post.importorders.ImportOrdersUseCase;
 import com.pgalindo.kata.order.importer.utils.CsvGenerator;
 import com.pgalindo.kata.order.importer.utils.TimeUtils;
 import org.slf4j.Logger;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 

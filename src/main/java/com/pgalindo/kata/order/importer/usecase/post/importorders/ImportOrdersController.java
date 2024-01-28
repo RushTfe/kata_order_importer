@@ -1,6 +1,5 @@
 package com.pgalindo.kata.order.importer.usecase.post.importorders;
 
-import com.pgalindo.kata.order.importer.usecase.post.importorders.response.ImportOrdersResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,17 +11,15 @@ public class ImportOrdersController {
     private final ImportOrdersUseCase importOrdersUseCase;
 
     @Autowired
-    public ImportOrdersController(ImportOrdersUseCase importOrdersUseCase) {
-        this.importOrdersUseCase = importOrdersUseCase;
+    public ImportOrdersController(ImportOrdersUseCase importOrderUseCase) {
+        this.importOrdersUseCase = importOrderUseCase;
     }
 
     @PostMapping("/api/koi/orders/importOrders")
-    public ResponseEntity<ImportOrdersResponse> importAllOrders() {
+    public ResponseEntity<Void> importAllOrders() {
 
-        ImportOrdersUseCaseOutput useCaseResult = importOrdersUseCase.importOrders();
+        importOrdersUseCase.importOrdersProcess();
 
-        ImportOrdersResponse response = new ImportOrdersResponse(useCaseResult.result(), useCaseResult.totalOrdersImported());
-
-        return ResponseEntity.ok().body(response);
+        return ResponseEntity.ok().body(null);
     }
 }

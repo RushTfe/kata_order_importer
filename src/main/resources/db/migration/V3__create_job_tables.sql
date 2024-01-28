@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS job (
 	id INTEGER auto_increment NOT NULL,
-	status ENUM('waiting', 'in_process', 'finished') NOT NULL,
-	created_at date NOT NULL,
-	updated_at date NOT NULL,
+	status ENUM('WAITING', 'IN_PROCESS', 'FINISHED', 'ERROR') NOT NULL,
+	created_at TIMESTAMP NOT NULL,
+	updated_at TIMESTAMP NOT NULL,
 	CONSTRAINT job_pk PRIMARY KEY (id)
 );
 

@@ -4,6 +4,7 @@
         <meta charset="UTF-8"/>
         <title>Kata Order Importer</title>
         <link rel="stylesheet" th:href="@{/css/kata.css}"/>
+        <script type="text/javascript" th:src="@{/js/kata.js}"></script>
         <link
                 rel="stylesheet"
                 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -33,26 +34,38 @@
         <div class="sidebar">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/api/koi/orders/download}">
-                        <i class="fa-solid fa-cloud-arrow-down"></i> Import data
-                    </a>
+                    <button type="button" class="nav-link" onclick="postKata('/api/koi/orders/importOrders')">
+                        <i class="fa-solid fa-cloud-arrow-down"></i> Import orders
+                    </button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/api/koi/orders/clearDatabase}">
+                    <button type="button" class="nav-link" onclick="deleteKata('/api/koi/orders/clearDatabase')">
                         <i class="fa-solid fa-trash"></i> Clear database
-                    </a>
+                    </button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/api/koi/orders/download}">
+                    <button type="button" class="nav-link" onclick="downloadCsv('/api/koi/orders/download')">
                         <i class="fas fa-download"></i> Download CSV
-                    </a>
+                    </button>
                 </li>
             </ul>
         </div>
 
         <!-- Sección Central -->
         <div class="content">
-            <!-- Contenido de la página -->
+
+            <div class="toast-container">
+                <div class="toast">
+                    <div class="toast-header">
+                        <button type="button" class="btn-close me-2 ms-0 ps-0" data-bs-dismiss="toast"></button>
+                        <span class="toast-header-text">Toast Header</span>
+                    </div>
+                    <div class="toast-body">
+                        <span class="toast-body-text">Some text inside the toast body</span>
+                    </div>
+                </div>
+            </div>
+
             <h2>Resúmenes</h2>
 
             <div class="accordion" id="accordionExample">
