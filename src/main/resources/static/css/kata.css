@@ -1,0 +1,54 @@
+* Estilos para la barra superior */
+.navbar {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+.navbar-brand {
+    width: 100%;
+    text-align: center; /* Centrar el texto */
+}
+
+/* Estilos para el cajón de navegación */
+.sidebar {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #f8f9fa;
+    padding-top: 20px;
+    padding-right: 10px;
+    z-index: 999;
+    margin-top: 56px; /* Altura de la barra superior */
+}
+
+
+.sidebar a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #343a40; /* Color de texto Bootstrap Dark */
+}
+
+.sidebar a:hover {
+    background-color: #007bff; /* Color de fondo Bootstrap Primary al hacer hover */
+    color: white;
+}
+
+/* Estilos para la sección central */
+.content {
+    margin-left: 200px; /* Ancho del cajón de navegación + espacio de margen */
+    padding: 20px;
+}
+
+/* Ajuste adicional para evitar superposición en pantallas pequeñas */
+@media (max-width: 768px) {
+    .sidebar {
+        margin-top: 0; /* Restablecer el margen en pantallas pequeñas */
+    }
+    .content {
+        margin-left: 0; /* Restablecer el margen en pantallas pequeñas */
+    }
+}

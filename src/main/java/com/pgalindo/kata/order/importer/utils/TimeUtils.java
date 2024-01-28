@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 @UtilityClass
 public class TimeUtils {
 
-    private static final String CSV_FORMAT = "dd/mm/yyyy";
+    private static final String CSV_FORMAT = "dd/MM/yyyy";
     private static final String CLIENT_FORMAT = "M/d/yyyy";
 
     public static LocalDate clientStringToLocalDate(String date) {
