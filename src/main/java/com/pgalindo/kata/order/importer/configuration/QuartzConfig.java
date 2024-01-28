@@ -1,6 +1,6 @@
 package com.pgalindo.kata.order.importer.configuration;
 
-import com.pgalindo.kata.order.importer.jobs.MyJob;
+import com.pgalindo.kata.order.importer.jobs.OrderImporterJob;
 import org.quartz.JobDetail;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +13,7 @@ public class QuartzConfig {
     @Bean
     public JobDetailFactoryBean myJobDetail() {
         JobDetailFactoryBean jobDetailFactoryBean = new JobDetailFactoryBean();
-        jobDetailFactoryBean.setJobClass(MyJob.class);
+        jobDetailFactoryBean.setJobClass(OrderImporterJob.class);
         jobDetailFactoryBean.setDurability(true);
         return jobDetailFactoryBean;
     }
