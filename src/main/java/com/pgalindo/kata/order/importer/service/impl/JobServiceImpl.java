@@ -52,7 +52,17 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
+    public List<ImportJobEntity> findAllImportsWaitingOrInProcess() {
+        return importJobRepository.findAllByStatusIn(List.of(JobStatus.WAITING, JobStatus.IN_PROCESS));
+    }
+
+    @Override
     public List<ClearDatabaseJobEntity> findAllClearDatabase() {
         return clearDatabaseJobRepository.findAllByOrderByCreatedAtDesc();
+    }
+
+    @Override
+    public List<ClearDatabaseJobEntity> findAllClearDatabaseWaitingOrInProcess() {
+        return clearDatabaseJobRepository.findAllByStatusIn(List.of(JobStatus.WAITING, JobStatus.IN_PROCESS));
     }
 }

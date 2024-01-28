@@ -13,5 +13,7 @@ public interface JobService {
     void createJob(AbstractJobEntity job);
     void updateStatus(AbstractJobEntity job, JobStatus status);
     List<ImportJobEntity> findAllImports();
+    List<ImportJobEntity> findAllImportsWaitingOrInProcess();
     List<ClearDatabaseJobEntity> findAllClearDatabase();
+    List<ClearDatabaseJobEntity> findAllClearDatabaseWaitingOrInProcess();
 }

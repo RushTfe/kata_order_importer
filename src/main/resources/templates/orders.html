@@ -63,7 +63,7 @@
 
             <div class="button-container my-3">
                 <div class="left-buttons">
-                    <button type="button" class="btn btn-primary" th:if="${canImportOrders}" onclick="postKata('/api/koi/orders/importOrders')">
+                    <button type="button" class="btn btn-primary" th:if="${canImportOrders}" onclick="postKata('/api/koi/orders/import-orders')">
                         <i class="fa-solid fa-cloud-arrow-down"></i> Import orders
                     </button>
                     <button type="button" class="btn btn-primary disabled" th:unless="${canImportOrders}">
@@ -78,7 +78,7 @@
                     </button>
                 </div>
 
-                <button type="button" class="btn btn-danger" th:if="${canClearDatabase}" onclick="deleteKata('/api/koi/orders/clearDatabase')">
+                <button type="button" class="btn btn-danger" th:if="${canClearDatabase}" onclick="deleteKata('/api/koi/orders/clear-database')">
                     <i class="fa-solid fa-trash"></i> Clear database
                 </button>
                 <button type="button" class="btn btn-danger disabled" th:unless="${canClearDatabase}">

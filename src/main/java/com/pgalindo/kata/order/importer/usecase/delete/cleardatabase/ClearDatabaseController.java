@@ -1,4 +1,4 @@
-package com.pgalindo.kata.order.importer.usecase.delete;
+package com.pgalindo.kata.order.importer.usecase.delete.cleardatabase;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,7 @@ public class ClearDatabaseController {
 
     private final ClearDatabaseUseCase clearDatabaseUseCase;
 
-    @DeleteMapping("/api/koi/orders/clearDatabase")
+    @DeleteMapping("/api/koi/orders/clear-database")
     public ResponseEntity<String> clearDatabase() {
 
         clearDatabaseUseCase.clearDatabaseProcess();

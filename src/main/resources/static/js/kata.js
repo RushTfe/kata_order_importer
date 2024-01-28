@@ -24,11 +24,13 @@ const downloadCsv = async (url) => {
     })
     .then(response => response.blob())
     .then(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "orders.csv";
-        a.click();
+        if (blob) {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "orders.csv";
+            a.click();
+        }
     })
 };
 

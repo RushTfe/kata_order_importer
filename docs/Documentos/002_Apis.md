@@ -14,7 +14,7 @@ Devolverá un listado con todas las ordenes que se encuentran en BD. Al ser 1.00
 Devolverá un objeto con los totales para cada campo.
 
 
-## POST api/koi/orders/importOrders
+## POST api/koi/orders/import-orders
 
 Generará la petición al API que nos conectaremos para importar las ordenes a Base de datos.
 

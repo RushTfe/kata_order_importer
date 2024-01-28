@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ImportOrdersController {
     private final ImportOrdersUseCase importOrdersUseCase;
 
-    @PostMapping("/api/koi/orders/importOrders")
+    @PostMapping("/api/koi/orders/import-orders")
     public ResponseEntity<Void> importAllOrders() {
 
         importOrdersUseCase.importOrdersProcess();

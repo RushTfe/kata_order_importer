@@ -23,6 +23,12 @@ public class OrdersDownloadCsvUseCase {
     public void generateCsv(PrintWriter writer) {
         logger.info("Started use case for downloading CSV file.");
 
+        Long count = orderService.countAllOrders();
+        if (count == 0) {
+            logger.info("There are no orders available at database to generate CSV. Please, import them first.");
+            return;
+        }
+
         List<String> headers = Arrays.asList(
                 "orderId",
                 "orderPriority",
