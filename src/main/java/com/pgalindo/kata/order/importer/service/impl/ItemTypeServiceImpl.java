@@ -14,6 +14,14 @@ public class ItemTypeServiceImpl implements ItemTypeService {
 
     private final ItemTypeRepository itemTypeRepository;
 
+    /**
+     * <p>
+     *     Finds and return any Item Type matching itemTypeName.
+     *     If it doesn't find one, it will create a new one and return it.
+     * </p>
+     * @param itemTypeName - Item type name to find one
+     * @return - The matching ItemType
+     */
     @Override
     public ItemType findItemTypesOrCreate(String itemTypeName) {
         Optional<ItemType> itemType = itemTypeRepository.findByNameIgnoreCase(itemTypeName);

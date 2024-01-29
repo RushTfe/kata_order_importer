@@ -14,6 +14,14 @@ public class SalesChannelServiceImpl implements SalesChannelService {
 
     private final SalesChannelRepository salesChannelRepository;
 
+    /**
+     * <p>
+     *     Finds and return any Sales Channel matching salesChannelName.
+     *     If it doesn't find one, it will create a new one and return it.
+     * </p>
+     * @param salesChannelName - Item type name to find one
+     * @return - The matching SalesChannel
+     */
     @Override
     public SalesChannel findSalesChannelOrCreate(String salesChannelName) {
         Optional<SalesChannel> salesChannel = salesChannelRepository.findByNameIgnoreCase(salesChannelName);

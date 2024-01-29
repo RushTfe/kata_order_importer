@@ -26,6 +26,7 @@ public class ClearDatabaseUseCase {
 
         if (count > 0 && CollectionUtils.isEmpty(jobsAlreadyCreated)) {
             logger.info("Received petition to clear database.");
+
             ClearDatabaseJobEntity job = new ClearDatabaseJobEntity();
             job.setStatus(JobStatus.WAITING);
             jobService.createJob(job);

@@ -1,6 +1,6 @@
 package com.pgalindo.kata.order.importer.usecase.get.download;
 
-import com.pgalindo.kata.order.importer.model.OrderCsvLineDto;
+import com.pgalindo.kata.order.importer.model.service.OrderCsvLineDto;
 import com.pgalindo.kata.order.importer.model.enums.CsvHeaders;
 import com.pgalindo.kata.order.importer.service.OrderService;
 import com.pgalindo.kata.order.importer.utils.CsvGenerator;
@@ -17,7 +17,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class OrdersDownloadCsvUseCase {
-    private static Logger logger = LoggerFactory.getLogger(OrdersDownloadCsvUseCase.class);
+    private static final Logger logger = LoggerFactory.getLogger(OrdersDownloadCsvUseCase.class);
     private final OrderService orderService;
 
     public void generateCsv(PrintWriter writer) {

@@ -27,6 +27,7 @@ public class ImportOrdersUseCase {
 
         if (count == 0 && CollectionUtils.isEmpty(jobsAlreadyCreated)) {
             logger.info("Received petition to import orders.");
+
             ImportJobEntity job = new ImportJobEntity();
             job.setStatus(JobStatus.WAITING);
             jobService.createJob(job);

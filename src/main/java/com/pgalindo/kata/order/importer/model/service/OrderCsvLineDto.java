@@ -1,4 +1,4 @@
-package com.pgalindo.kata.order.importer.model;
+package com.pgalindo.kata.order.importer.model.service;
 
 import java.math.BigDecimal;
 

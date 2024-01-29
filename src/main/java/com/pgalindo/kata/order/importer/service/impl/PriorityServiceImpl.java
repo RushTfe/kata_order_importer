@@ -13,7 +13,14 @@ import java.util.Optional;
 public class PriorityServiceImpl implements PriorityService {
 
     private final PriorityRepository priorityRepository;
-
+    /**
+     * <p>
+     *     Finds and return any Priority matching priorityName.
+     *     If it doesn't find one, it will create a new one and return it.
+     * </p>
+     * @param priorityName - Priority name to find one
+     * @return - The matching Priority
+     */
     @Override
     public Priority findPriorityOrCreate(String priorityName) {
         Optional<Priority> priority = priorityRepository.findByNameIgnoreCase(priorityName);

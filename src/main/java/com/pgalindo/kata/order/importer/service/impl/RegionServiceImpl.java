@@ -15,6 +15,14 @@ public class RegionServiceImpl implements RegionService {
 
     private final RegionRepository regionRepository;
 
+    /**
+     * <p>
+     *     Finds and return any Region matching regionName.
+     *     If it doesn't find one, it will create a new one and return it.
+     * </p>
+     * @param regionName - Region name to find one
+     * @return - The matching Region
+     */
     @Override
     public Region findPriorityOrCreate(String regionName) {
         Optional<Region> region = regionRepository.findByNameIgnoreCase(regionName);

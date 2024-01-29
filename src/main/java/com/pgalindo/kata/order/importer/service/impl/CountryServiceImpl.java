@@ -15,6 +15,15 @@ public class CountryServiceImpl implements CountryService {
 
     private final CountryRepository countryRepository;
 
+    /**
+     * <p>
+     *     Finds and return any country matching countryName.
+     *     If it doesn't find one, it will create a new one and return it.
+     * </p>
+     * @param countryName - country name to find one
+     * @param region - Region associated with the country
+     * @return - The matching country
+     */
     @Override
     public Country findCountryOrCreate(String countryName, Region region) {
         Optional<Country> country = countryRepository.findByNameIgnoreCase(countryName);
