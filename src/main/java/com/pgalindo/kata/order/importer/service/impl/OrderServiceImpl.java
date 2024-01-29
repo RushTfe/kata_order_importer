@@ -37,22 +37,9 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public List<OrderCsvLineDto> findAllForCsv() {
-        return orderRepository.findAllByOrderByOriginalOrderIdAsc().stream().map(orderEntity -> new OrderCsvLineDto(
-                        orderEntity.getOriginalOrderId().toString(),
-                        orderEntity.getPriority().getName(),
-                        TimeUtils.localDateToCsvStringFormatted(orderEntity.getDate()),
-                        orderEntity.getCountry().getRegion().getName(),
-                        orderEntity.getCountry().getName(),
-                        orderEntity.getItemType().getName(),
-                        orderEntity.getSalesChannel().getName(),
-                        TimeUtils.localDateToCsvStringFormatted(orderEntity.getShipDate()),
-                        orderEntity.getUnitsSold(),
-                        orderEntity.getUnitPrice(),
-                        orderEntity.getUnitCost(),
-                        orderEntity.getTotalRevenue(),
-                        orderEntity.getTotalCost(),
-                        orderEntity.getTotalProfit()
-                ))
+        return orderRepository.findAllByOrderByOriginalOrderIdAsc()
+                .stream()
+                .map(orderMapper::orderToOrderCsvLineDto)
                 .toList();
     }
 
