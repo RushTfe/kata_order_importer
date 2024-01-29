@@ -1,6 +1,7 @@
 package com.pgalindo.kata.order.importer.usecase.get.download;
 
 import com.pgalindo.kata.order.importer.model.OrderCsvLineDto;
+import com.pgalindo.kata.order.importer.model.enums.CsvHeaders;
 import com.pgalindo.kata.order.importer.service.OrderService;
 import com.pgalindo.kata.order.importer.utils.CsvGenerator;
 import com.pgalindo.kata.order.importer.utils.TimeUtils;
@@ -11,13 +12,12 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class OrdersDownloadCsvUseCase {
-    private static final Logger logger = LoggerFactory.getLogger(OrdersDownloadCsvUseCase.class);
+    private static Logger logger = LoggerFactory.getLogger(OrdersDownloadCsvUseCase.class);
     private final OrderService orderService;
 
     public void generateCsv(PrintWriter writer) {
@@ -29,22 +29,7 @@ public class OrdersDownloadCsvUseCase {
             return;
         }
 
-        List<String> headers = Arrays.asList(
-                "orderId",
-                "orderPriority",
-                "orderDate",
-                "region",
-                "country",
-                "itemType",
-                "salesChannel",
-                "shipDate",
-                "unitsSold",
-                "unitPrice",
-                "unitCost",
-                "totalRevenue",
-                "totalCost",
-                "totalProfit"
-        );
+        List<String> headers = CsvHeaders.getHeaderValues();
 
         long startTimestamp = System.currentTimeMillis();
         List<OrderCsvLineDto> csvLines = orderService.findAllForCsv();
@@ -59,35 +44,38 @@ public class OrdersDownloadCsvUseCase {
 
             csvLines.forEach(line -> {
                 try {
-                    csvGenerator.generateCsvLine(List.of(
-                            line.orderId(),
-                            line.orderPriority(),
-                            line.orderDate(),
-                            line.region(),
-                            line.country(),
-                            line.itemType(),
-                            line.salesChannel(),
-                            line.shipDate(),
-                            String.valueOf(line.unitsSold()),
-                            line.unitPrice().toString(),
-                            line.unitCost().toString(),
-                            line.totalRevenue().toString(),
-                            line.totalCost().toString(),
-                            line.totalProfit().toString()
-
-                    ));
+                    csvGenerator.generateCsvLine(generateLine(line));
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    logger.error("There was an exception while trying to generate the CSV file.", e);
                 }
             });
 
             csvGenerator.finishProcess();
 
         } catch (IOException e) {
-            logger.error("There was an error when trying to write the CSV", e);
+            logger.error("There was an exception while trying to generate the CSV file", e);
         }
 
         logger.info("Finished use case for downloading CSV file.");
 
+    }
+
+    private static List<String> generateLine(OrderCsvLineDto line) {
+        return List.of(
+                line.orderId(),
+                line.orderPriority(),
+                line.orderDate(),
+                line.region(),
+                line.country(),
+                line.itemType(),
+                line.salesChannel(),
+                line.shipDate(),
+                String.valueOf(line.unitsSold()),
+                line.unitPrice().toString(),
+                line.unitCost().toString(),
+                line.totalRevenue().toString(),
+                line.totalCost().toString(),
+                line.totalProfit().toString()
+        );
     }
 }

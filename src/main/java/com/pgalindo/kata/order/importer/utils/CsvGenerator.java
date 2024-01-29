@@ -1,5 +1,6 @@
 package com.pgalindo.kata.order.importer.utils;
 
+import com.pgalindo.kata.order.importer.exceptions.CsvLineSizeException;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
@@ -37,7 +38,7 @@ public class CsvGenerator {
                     "Line provided should have the same amount of items than header (Header -> %d, Line -> %d).",
                     headers.size(), line.size()
             );
-            throw new RuntimeException(message);
+            throw new CsvLineSizeException(message);
         }
     }
 

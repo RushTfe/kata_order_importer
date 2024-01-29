@@ -22,12 +22,12 @@ public class JobExecutionProcessor implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        logger.info("Job execution processor fired.");
+        logger.debug("Job execution processor fired.");
 
         jobService.findFirstWaiting()
                 .ifPresent(this::manageJob);
 
-        logger.info("Job execution processor finished.");
+        logger.debug("Job execution processor finished.");
     }
 
     private void manageJob(AbstractJobEntity job) {

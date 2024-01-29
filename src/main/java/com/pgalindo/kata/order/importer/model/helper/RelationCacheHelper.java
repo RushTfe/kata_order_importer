@@ -6,6 +6,25 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * Cache class.
+ * <p>
+ *     Its used to store master tables, so it's not necessary to call database many times to retrieve them when doing
+ *     the import process. It's also useful, because at import process, we don't have these rows loaded at database yet.
+ * </p>
+ *
+ * <p>
+ *     This class will find for the cached object. If it's not cached yet, it will execute the function that returns
+ *     said object passed as parameter for every method. It's supposed to be a service call that saves and/or
+ *     retrieves the item.
+ * </p>
+ *
+ * @param priorityMap
+ * @param salesChannelMap
+ * @param itemTypeMap
+ * @param regionMap
+ * @param countryMap
+ */
 public record RelationCacheHelper(
         Map<String, Priority> priorityMap,
         Map<String, SalesChannel> salesChannelMap,
